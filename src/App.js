@@ -1,10 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import MapWrapper from "./components/MapWrapper";
 
 function App() {
   return (
     <div className="App">
-      <h1>tu bedzie robiona robota</h1>
+      <h1>Favortown</h1>
+      <MapWrapper />
     </div>
   );
 }
