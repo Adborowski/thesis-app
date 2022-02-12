@@ -7,12 +7,12 @@ const MapWrapper = () => {
   return (
     //   prettier-ignore
     <div id="map" className={classes.mapWrapper}>
-      <MapContainer className={classes.mapContainer} center={[51.505, -0.09]} zoom={15}>
+      <MapContainer className={classes.mapContainer} center={[55.676098, 12.568337]} zoom={15}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=Wh7jInITDzesQG1mIvA5f9mYRxjOcX91ocXHKpsXuPmsEpehMXWOfCEmzCaINJHd"
+          url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
         />
-        <Marker position={[51.505, -0.09]}>
+        <Marker position={[55.676098, 12.568337]}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>

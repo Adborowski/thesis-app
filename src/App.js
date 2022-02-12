@@ -4,7 +4,7 @@ import MapWrapper from "./components/MapWrapper";
 function App() {
   return (
     <div className="App">
-      <h1>Favortown</h1>
+      <h1>Adam's Thesis App</h1>
       <MapWrapper />
     </div>
   );
