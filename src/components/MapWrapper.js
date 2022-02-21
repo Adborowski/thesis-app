@@ -26,19 +26,15 @@ function MapInsert() {
   return null;
 }
 
+// https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2
+
 function MapWrapper() {
   return (
     <MapContainer className={classes.map} center={[50.5, 30.5]} zoom={13}>
-      <LayersControl position="topright">
-        <LayersControl.BaseLayer
-          checked
-          name="OpenStreetMap.Mapnik"
-        ></LayersControl.BaseLayer>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-      </LayersControl>
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
+      />
       <MapInsert />
     </MapContainer>
   );
