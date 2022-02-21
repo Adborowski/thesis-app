@@ -14,14 +14,24 @@ import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-const center = [51.505, -0.09];
-const rectangle = [
-  [51.49, -0.08],
-  [51.5, -0.06],
-];
-
 function MapInsert() {
-  const map = useMap();
+  console.log("MapInsert running");
+  const map = useMapEvents({
+    load: () => {
+      console.log("map loaded");
+      map.locate();
+    },
+    click: () => {
+      map.locate();
+    },
+    locationfound: (location) => {
+      console.log("location found:", location);
+      map.fitBounds(location.bounds);
+    },
+    locationerror: (error) => {
+      console.log("ERROR", error);
+    },
+  });
   console.log("map center:", map.getCenter());
   return null;
 }
