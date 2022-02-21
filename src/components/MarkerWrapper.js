@@ -3,8 +3,9 @@ import classes from "./map.module.css";
 import * as L from "leaflet";
 
 const MarkerWrapper = (props) => {
+  console.log(L.GeoJSON);
   var myIcon = L.icon({
-    iconUrl: "./markers/marker7.svg",
+    iconUrl: "./markers/marker5.svg",
     iconSize: [38, 95],
     iconAnchor: [22, 94],
     popupAnchor: [-3, -76],

@@ -11,3 +11,7 @@
 .mapContainer {
   height: 100%;
 }
+
+#map {
+  height: 1000px;
+}
