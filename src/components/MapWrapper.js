@@ -14,24 +14,39 @@ import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
+// must be a child of MapContainer
 function MapInsert() {
   console.log("MapInsert running");
+
   const map = useMapEvents({
     load: () => {
       console.log("map loaded");
       map.locate();
     },
+
     click: () => {
       map.locate();
     },
+
     locationfound: (location) => {
       console.log("location found:", location);
+      const marker = L.marker([
+        location.latitude,
+        location.longitude,
+      ]).bindPopup("Your are here :)");
+      map.addLayer(marker);
       map.fitBounds(location.bounds);
     },
+
     locationerror: (error) => {
       console.log("ERROR", error);
     },
   });
+
+  useEffect(() => {
+    map.locate();
+  }, [map]);
+
   console.log("map center:", map.getCenter());
   return null;
 }
