@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "latlng": [55.6943, 12.5443],
+    "popupContent": "Popup says hi"
+  },
+  {
+    "id": 2,
+    "latlng": [55.7007, 12.5762],
+    "popupContent": "Popup says hi"
+  },
+  {
+    "id": 3,
+    "latlng": [55.7153, 12.5988],
+    "popupContent": "Popup says hi"
+  },
+  {
+    "id": 4,
+    "latlng": [55.7062, 12.5762],
+    "popupContent": "Popup says hi"
+  }
+]
