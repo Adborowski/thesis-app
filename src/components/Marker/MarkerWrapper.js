@@ -4,7 +4,7 @@ import * as L from "leaflet";
 
 const MarkerWrapper = (props) => {
   const myIcon = L.icon({
-    iconUrl: "./markers/marker5.svg",
+    iconUrl: "./markers/round-pin.svg",
     iconSize: [38, 95],
     iconAnchor: [22, 94],
     popupAnchor: [-3, -76],

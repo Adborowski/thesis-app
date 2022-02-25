@@ -19,19 +19,15 @@ function MapInsert() {
 
   const map = useMapEvents({
     click: (e) => {
+      map.locate(); // emits locationFound
       console.log("Click at ", e.latlng);
-      const newMarker = L.marker(e.latlng);
-      newMarker.addTo(map);
+      // const newMarker = L.marker(e.latlng);
+      // newMarker.addTo(map);
     },
 
     locationfound: (location) => {
       console.log("location found:", location);
-      // map.setView(location.latlng, 13, {});
-      //map.flyTo([lat, lng], zoom);
-      map.flyTo(location.latlng, 13, {
-        animate: true,
-        duration: 0.5,
-      });
+      map.setView(location.latlng, 13, {});
     },
 
     locationerror: (error) => {
@@ -40,7 +36,7 @@ function MapInsert() {
   });
 
   useEffect(() => {
-    map.locate(); // emits locationFound
+    // map.locate(); // emits locationFound
   }, [map]);
 
   console.log("map center:", map.getCenter());
