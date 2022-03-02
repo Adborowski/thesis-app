@@ -2,21 +2,33 @@
   {
     "id": 1,
     "latlng": [55.6943, 12.5443],
-    "popupContent": "Popup says hi"
+    "taskTitle": "Clean up mess",
+    "taskReward": 100,
+    "taskOwnerID": 2,
+    "attempts": []
   },
   {
     "id": 2,
     "latlng": [55.7007, 12.5762],
-    "popupContent": "Popup says hi"
+    "taskTitle": "Repair a fence",
+    "taskReward": 75,
+    "taskOwnerID": 1,
+    "attempts": []
   },
   {
     "id": 3,
     "latlng": [55.7153, 12.5988],
-    "popupContent": "Popup says hi"
+    "taskTitle": "Remove trash",
+    "taskReward": 90,
+    "taskOwnerID": 2,
+    "attempts": []
   },
   {
     "id": 4,
     "latlng": [55.7062, 12.5762],
-    "popupContent": "Popup says hi"
+    "taskTitle": "Cover up graffiti",
+    "taskReward": 200,
+    "taskOwnerID": 3,
+    "attempts": []
   }
 ]

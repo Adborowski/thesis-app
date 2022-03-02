@@ -1,49 +1,46 @@
 import classes from "./map.module.css";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from "react-leaflet";
-import MarkerWrapper from "./Marker/MarkerWrapper";
+import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { useEffect, useState } from "react";
-import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Markers from "./Marker/Markers";
+import TaskEditor from "./TaskEditor/TaskEditor";
 
-// must be a child of MapContainer
-function MapInsert() {
+const MapWrapper = (props) => {
+  const db = props.db;
+
+  // prettier-ignore
+  let [taskEditorLocation, setTaskEditorLocation] = useState(null);
+
+  const MapInsert = () => {
+    // ^ must be a child of MapContainer
+    console.log("Map scripts running...");
+
+    const map = useMapEvents({
+      click: (e) => {
+        map.locate(); // emits locationFound
+        console.log("Click at ", e.latlng);
+        setTaskEditorLocation(e.latlng);
+      },
+
+      locationfound: (location) => {
+        console.log("location found:", location);
+        map.setView(location.latlng, 13, {});
+      },
+
+      locationerror: (error) => {
+        console.log("LOCATION ERROR", error);
+      },
+    });
+
+    useEffect(() => {
+      // map.locate(); // emits locationFound
+      console.log("map effect");
+    }, [map]);
+
+    console.log("map center:", map.getCenter());
+    return null;
+  };
   //
-  console.log("Map scripts running...");
-
-  const map = useMapEvents({
-    click: (e) => {
-      map.locate(); // emits locationFound
-      console.log("Click at ", e.latlng);
-      // const newMarker = L.marker(e.latlng);
-      // newMarker.addTo(map);
-    },
-
-    locationfound: (location) => {
-      console.log("location found:", location);
-      map.setView(location.latlng, 13, {});
-    },
-
-    locationerror: (error) => {
-      console.log("LOCATION ERROR", error);
-    },
-  });
-
-  useEffect(() => {
-    // map.locate(); // emits locationFound
-  }, [map]);
-
-  console.log("map center:", map.getCenter());
-  return null;
-}
-
-function MapWrapper() {
   return (
     <MapContainer
       className={classes.map}
@@ -56,8 +53,9 @@ function MapWrapper() {
       />
       <Markers />
       <MapInsert />
+      {TaskEditor(taskEditorLocation)}
     </MapContainer>
   );
-}
+};
 
 export default MapWrapper;

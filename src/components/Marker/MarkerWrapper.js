@@ -20,7 +20,7 @@ const MarkerWrapper = (props) => {
       title="no elo"
       opacity="1.0"
     >
-      <Popup>{props.popupContent}</Popup>
+      <Popup>{(props.popupContent, (<h1>elo</h1>))}</Popup>
     </Marker>
   );
 };
