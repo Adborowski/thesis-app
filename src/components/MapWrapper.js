@@ -8,6 +8,12 @@ import TaskEditor from "./TaskEditor/TaskEditor";
 const MapWrapper = (props) => {
   const db = props.db;
 
+  const onEditorOpened = () => {
+    console.log("editor opened");
+  };
+
+  const [isEditorOpen, setIsEditorOpen] = useState();
+  const [userLocation, setUserLocation] = useState();
   // prettier-ignore
   let [taskEditorLocation, setTaskEditorLocation] = useState(null);
 
@@ -17,14 +23,21 @@ const MapWrapper = (props) => {
 
     const map = useMapEvents({
       click: (e) => {
-        map.locate(); // emits locationFound
+        if (!userLocation) {
+          // map.locate();
+        }
+
         console.log("Click at ", e.latlng);
-        setTaskEditorLocation(e.latlng);
+
+        if (!taskEditorLocation) {
+          setTaskEditorLocation(e.latlng);
+        }
       },
 
-      locationfound: (location) => {
-        console.log("location found:", location);
-        map.setView(location.latlng, 13, {});
+      locationfound: (userLocation) => {
+        console.log("location found:", userLocation);
+        setUserLocation(userLocation);
+        map.setView(userLocation.latlng, 13, {});
       },
 
       locationerror: (error) => {
@@ -53,7 +66,7 @@ const MapWrapper = (props) => {
       />
       <Markers />
       <MapInsert />
-      {TaskEditor(taskEditorLocation)}
+      <TaskEditor latlng={taskEditorLocation} onEditorOpened={onEditorOpened} />
     </MapContainer>
   );
 };

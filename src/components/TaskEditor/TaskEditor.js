@@ -1,14 +1,13 @@
 import { Marker, Popup, Tooltip } from "react-leaflet";
+import { useEffect } from "react";
 import L from "leaflet";
-import { useRef, useEffect } from "react";
+import classes from "./TaskEditor.module.css";
 
-const TaskEditor = (latlng) => {
+const TaskEditor = (props) => {
   // Create your own class, extending from the Marker class.
 
-  console.log("Running task editor with latlng: ", latlng);
-
   const icon = L.icon({
-    iconUrl: "./markers/round-pin.svg",
+    iconUrl: "./markers/round-pin-2.svg",
     // shadowUrl: 'leaf-shadow.png',
     iconSize: [30, 30], // size of the icon
     shadowSize: [50, 64], // size of the shadow
@@ -17,11 +16,32 @@ const TaskEditor = (latlng) => {
     popupAnchor: [0, -30], // point from which the popup should open relative to the iconAnchor
   });
 
-  if (latlng) {
+  const onEditorOpened = () => {
+    console.log("task editor opened");
+  };
+
+  const onEditorClicked = () => {
+    console.log("task editor clicked");
+  };
+
+  if (props.latlng) {
     return (
-      <Marker position={latlng} icon={icon}>
-        <Tooltip direction={"top"} offset={[0, -30]} opacity={1} permanent>
-          <input placeholder={"task title"}></input>
+      <Marker position={props.latlng} icon={icon}>
+        <Tooltip
+          direction={"top"}
+          offset={[0, -30]}
+          opacity={1}
+          permanent
+          interactive={true}
+          ontooltipopen={props.onEditorOpened}
+          onclick={console.log("x")}
+        >
+          <div className={classes.TaskEditor}>
+            <h3>Task name</h3>
+            <input placeholder={"task title"}></input>
+            <input type="number" placeholder={"reward"}></input>
+            <input placeholder={"task description"}></input>
+          </div>
         </Tooltip>
       </Marker>
     );

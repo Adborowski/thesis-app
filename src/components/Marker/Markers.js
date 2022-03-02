@@ -15,9 +15,7 @@ const Markers = () => {
     popupAnchor: [0, -30], // point from which the popup should open relative to the iconAnchor
   });
 
-  console.log("Markers using db:", db);
   const content = db.map((task) => {
-    console.log(task);
     return (
       <Marker key={task.id} position={task.latlng} icon={icon}>
         <Popup>
