@@ -28,26 +28,15 @@ const TaskEditor = (props) => {
     console.log("closing editor");
   };
 
-  const markerRef = useRef();
-  const tooltipRef = useRef();
-  console.log(markerRef);
-  console.log(tooltipRef);
-
-  useEffect(() => {
-    console.log(markerRef);
-  }, [markerRef]);
-
   if (props.latlng) {
     return (
-      <Marker position={props.latlng} icon={icon} ref={markerRef}>
+      <Marker position={props.latlng} icon={icon}>
         <Tooltip
-          ref={tooltipRef}
           direction={"top"}
           offset={[0, -30]}
           opacity={1}
-          permanent
+          permanent={true}
           interactive={true}
-          ontooltipopen={props.onEditorOpened}
           onclick={console.log("x")}
         >
           <div className={classes.TaskEditor}>
@@ -55,7 +44,7 @@ const TaskEditor = (props) => {
             <input placeholder={"task title"}></input>
             <input type="number" placeholder={"reward"}></input>
             <input placeholder={"task description"}></input>
-            <button onClick={closeEditor}>close</button>
+            <button onClick={props.onCloseEditorClick}>close</button>
           </div>
         </Tooltip>
       </Marker>
