@@ -1,6 +1,6 @@
 import classes from "./map.module.css";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import Markers from "./Marker/Markers";
 import TaskEditor from "./TaskEditor/TaskEditor";
@@ -17,6 +17,12 @@ const MapWrapper = (props) => {
   // prettier-ignore
   let [taskEditorLocation, setTaskEditorLocation] = useState(null);
 
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    console.log(mapRef);
+  }, [mapRef]);
+
   const MapInsert = () => {
     // ^ must be a child of MapContainer
     console.log("Map scripts running...");
@@ -27,7 +33,7 @@ const MapWrapper = (props) => {
           // map.locate();
         }
 
-        console.log("Click at ", e.latlng);
+        // console.log("Click at ", e.latlng);
 
         if (!taskEditorLocation) {
           setTaskEditorLocation(e.latlng);

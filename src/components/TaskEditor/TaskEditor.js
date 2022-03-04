@@ -1,5 +1,5 @@
 import { Marker, Popup, Tooltip } from "react-leaflet";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import L from "leaflet";
 import classes from "./TaskEditor.module.css";
 
@@ -24,10 +24,24 @@ const TaskEditor = (props) => {
     console.log("task editor clicked");
   };
 
+  const closeEditor = () => {
+    console.log("closing editor");
+  };
+
+  const markerRef = useRef();
+  const tooltipRef = useRef();
+  console.log(markerRef);
+  console.log(tooltipRef);
+
+  useEffect(() => {
+    console.log(markerRef);
+  }, [markerRef]);
+
   if (props.latlng) {
     return (
-      <Marker position={props.latlng} icon={icon}>
+      <Marker position={props.latlng} icon={icon} ref={markerRef}>
         <Tooltip
+          ref={tooltipRef}
           direction={"top"}
           offset={[0, -30]}
           opacity={1}
@@ -41,6 +55,7 @@ const TaskEditor = (props) => {
             <input placeholder={"task title"}></input>
             <input type="number" placeholder={"reward"}></input>
             <input placeholder={"task description"}></input>
+            <button onClick={closeEditor}>close</button>
           </div>
         </Tooltip>
       </Marker>
