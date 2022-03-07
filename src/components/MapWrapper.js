@@ -108,6 +108,7 @@ const MapWrapper = (props) => {
       className={classes.map}
       center={[51.477928, -0.001545]}
       zoom={13}
+      tap={false}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
