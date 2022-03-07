@@ -1,9 +1,11 @@
-import classes from "./marker.module.css";
-import { Marker, Popup } from "react-leaflet";
+import { useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 const Markers = (props) => {
+  const taskData = props.db;
+  const map = useMap();
+
   const icon = L.icon({
     iconUrl: "./markers/round-pin.svg",
     // shadowUrl: 'leaf-shadow.png',
@@ -14,20 +16,19 @@ const Markers = (props) => {
     popupAnchor: [0, -30], // point from which the popup should open relative to the iconAnchor
   });
 
-  const content = props.db.map((task) => {
-    return (
-      <Marker key={task.id} position={task.latlng} icon={icon}>
-        <Popup>
-          <h1>{task.taskTitle}</h1>
-          <h2>{task.taskReward}</h2>
-          <h3>{task.taskOwnerID}</h3>
-          <button> solve </button>
-        </Popup>
-      </Marker>
-    );
+  const markerOptions = { icon: icon };
+
+  console.log(taskData);
+
+  taskData.forEach((task) => {
+    const newMarker = L.marker(task.latlng, markerOptions);
+    const popupContent = <h1>I am a popup</h1>;
+    const newPopup = L.popup(popupContent);
+    newMarker.bindPopup(newPopup);
+    newMarker.addTo(map);
   });
 
-  return content;
+  return null;
 };
 
 export default Markers;

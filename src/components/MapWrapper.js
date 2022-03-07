@@ -1,18 +1,11 @@
 import classes from "./map.module.css";
-import {
-  MapContainer,
-  TileLayer,
-  useMapEvents,
-  Marker,
-  Tooltip,
-  Popup,
-  useMap,
-} from "react-leaflet";
-import { useEffect, useState, useRef } from "react";
+import { MapContainer, TileLayer, useMapEvents, useMap } from "react-leaflet";
+import ReactDOMServer from "react-dom/server";
+import { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import Markers from "./Marker/Markers";
-import TaskEditor from "./TaskEditor/TaskEditor";
 import L from "leaflet";
+import TaskEditor from "./TaskEditor/TaskEditor";
 
 const MapWrapper = (props) => {
   const db = props.db;
@@ -28,36 +21,21 @@ const MapWrapper = (props) => {
     className: classes.icon,
   });
 
-  const onEditorOpened = () => {
-    console.log("editor opened");
-  };
-
-  const onCloseEditorClick = (e) => {
-    console.log(e.target.parentElement.parentElement.leafletElement);
-    // setTaskEditorLocation(null);
-  };
-
-  const isEditorOpen = (map) => {
-    console.log("IS EDITOR OPEN?");
-    map.eachLayer((layer) => {
-      if (layer.type === "editorMarker") {
-        return true;
-      } else {
-        return false;
-      }
-    });
-  };
-
-  // const [isEditorOpen, setIsEditorOpen] = useState();
   const [userLocation, setUserLocation] = useState();
-  // prettier-ignore
-  let [taskEditorLocation, setTaskEditorLocation] = useState(null);
 
   const MapInsert = () => {
     // ^ must be a child of MapContainer
     console.log("Map scripts running...");
 
     const map = useMap();
+
+    map.on("popupopen", function (e) {
+      console.log("Firing popupopen", e);
+      console.log(e.target._popup._latlng);
+      var px = map.project(e.target._popup._latlng); // find the pixel location on the map where the popup anchor is
+      px.y -= e.target._popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
+      map.panTo(map.unproject(px), { animate: true }); // pan to new center
+    });
 
     // report all layers on every redraw
     useEffect(() => {
@@ -71,27 +49,35 @@ const MapWrapper = (props) => {
       click: (e) => {
         console.log(e.latlng);
         console.log("Layers:", map._layers);
+
+        // FUNCTION: CREATE TASK EDITOR (LATLNG)
+
         // check if there is already a tooltip open
-
-        // create task editor tooltip with predetermined content
-        const newMarker = L.marker(e.latlng, { icon: newMarkerIcon });
-
         map.eachLayer((layer) => {
           if (layer.type === "editorMarker") {
             layer.remove();
           }
         });
 
+        // create task editor tooltip with predetermined content from TaskEditor
+        const newMarker = L.marker(e.latlng, { icon: newMarkerIcon });
         newMarker.type = "editorMarker";
-        const newPopup = L.popup();
+        const newPopup = L.popup()
+          .setLatLng(e.latlng)
+          .setContent(ReactDOMServer.renderToString(<TaskEditor />));
         newPopup.type = "editorPopup";
-        newPopup.bindPopup(newMarker);
+
+        newMarker.bindPopup(
+          ReactDOMServer.renderToStaticMarkup(<TaskEditor latlng={e.latlng} />)
+        );
+
         newMarker.addTo(map);
-        console.log("New Popup: ", newPopup);
+        newMarker.openPopup();
       },
-      locationfound: (userLocation) => {
-        console.log("location found:", userLocation);
-        setUserLocation(userLocation);
+      locationfound: (location) => {
+        console.log("location found:", location);
+        setUserLocation(location);
+        console.log("User found at location:", userLocation);
       },
 
       locationerror: (error) => {
@@ -114,13 +100,8 @@ const MapWrapper = (props) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
       />
-      <Markers db={db} />
       <MapInsert />
-      <TaskEditor
-        latlng={taskEditorLocation}
-        onEditorOpened={onEditorOpened}
-        onCloseEditorClick={onCloseEditorClick}
-      />
+      <Markers db={db} />
     </MapContainer>
   );
 };

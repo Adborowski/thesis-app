@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "latlng": [51.4797, 0.004],
+    "latlng": [51.479785675764, 0.00410292403287],
     "taskTitle": "Clean up mess",
     "taskReward": 100,
     "taskOwnerID": 2,
@@ -9,7 +9,7 @@
   },
   {
     "id": 2,
-    "latlng": [51.46, 0.0082],
+    "latlng": [51.46109340238, 0.00820293874387],
     "taskTitle": "Repair a fence",
     "taskReward": 75,
     "taskOwnerID": 1,
@@ -17,7 +17,7 @@
   },
   {
     "id": 3,
-    "latlng": [51.45, 0.023],
+    "latlng": [51.453476429376, 0.023573298364],
     "taskTitle": "Remove trash",
     "taskReward": 90,
     "taskOwnerID": 2,
