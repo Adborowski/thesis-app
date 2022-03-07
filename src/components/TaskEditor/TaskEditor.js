@@ -1,11 +1,9 @@
-import { Marker, Popup, Tooltip } from "react-leaflet";
+import { Marker, Popup, Tooltip, useMap } from "react-leaflet";
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import classes from "./TaskEditor.module.css";
 
 const TaskEditor = (props) => {
-  // Create your own class, extending from the Marker class.
-
   const icon = L.icon({
     iconUrl: "./markers/round-pin-2.svg",
     // shadowUrl: 'leaf-shadow.png',
@@ -33,11 +31,12 @@ const TaskEditor = (props) => {
       <Marker position={props.latlng} icon={icon}>
         <Tooltip
           direction={"top"}
-          offset={[0, -30]}
+          offset={[0, -5]}
           opacity={1}
           permanent={true}
           interactive={true}
           onclick={console.log("x")}
+          className="tooltip"
         >
           <div className={classes.TaskEditor}>
             <h3>Task name</h3>

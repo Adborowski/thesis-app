@@ -6,12 +6,17 @@
 
 .map {
   height: 100vh;
+  cursor: crosshair;
 }
 
 .mapContainer {
   height: 100%;
+  /* do not remove this class */
 }
 
 #map {
   height: 1000px;
+}
+
+.icon {
 }

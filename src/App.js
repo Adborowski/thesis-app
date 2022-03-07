@@ -9,7 +9,7 @@ function App() {
       <div className={classes.desktopMenu}>
         <div className={classes.title}>thesis-app</div>
       </div>
-      <MapWrapper data={db} />
+      <MapWrapper db={db} />
     </div>
   );
 }
