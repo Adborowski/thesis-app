@@ -1,7 +1,6 @@
 import classes from "./map.module.css";
 import { MapContainer, TileLayer, useMapEvents, useMap } from "react-leaflet";
 import ReactDOMServer from "react-dom/server";
-import { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import Markers from "./Marker/Markers";
 import L from "leaflet";
@@ -21,29 +20,32 @@ const MapWrapper = (props) => {
     className: classes.icon,
   });
 
-  const [userLocation, setUserLocation] = useState();
-
   const MapInsert = () => {
     // ^ must be a child of MapContainer
     console.log("Map scripts running...");
-
     const map = useMap();
 
+    map.eachLayer(function (layer) {
+      map.removeLayer(layer);
+    });
+
+    // center view on popup when it opens
     map.on("popupopen", function (e) {
       console.log("Firing popupopen", e);
       console.log(e.target._popup._latlng);
       var px = map.project(e.target._popup._latlng); // find the pixel location on the map where the popup anchor is
       px.y -= e.target._popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
       map.panTo(map.unproject(px), { animate: true }); // pan to new center
+      console.log("Layers:", map._layers);
     });
 
-    // report all layers on every redraw
-    useEffect(() => {
-      console.log(map._layers);
-      map.eachLayer(function (layer) {
-        console.log(layer);
-      });
-    }, []);
+    map.on("popupclose", function (e) {
+      console.log("Popup closed:", e.popup._source);
+      if (e.popup._source.type === "editorMarker") {
+        e.popup._source.remove();
+      }
+      console.log("Layers:", map._layers);
+    });
 
     useMapEvents({
       click: (e) => {
@@ -52,32 +54,19 @@ const MapWrapper = (props) => {
 
         // FUNCTION: CREATE TASK EDITOR (LATLNG)
 
-        // check if there is already a tooltip open
-        map.eachLayer((layer) => {
-          if (layer.type === "editorMarker") {
-            layer.remove();
-          }
-        });
-
         // create task editor tooltip with predetermined content from TaskEditor
         const newMarker = L.marker(e.latlng, { icon: newMarkerIcon });
         newMarker.type = "editorMarker";
-        const newPopup = L.popup()
-          .setLatLng(e.latlng)
-          .setContent(ReactDOMServer.renderToString(<TaskEditor />));
-        newPopup.type = "editorPopup";
-
         newMarker.bindPopup(
           ReactDOMServer.renderToStaticMarkup(<TaskEditor latlng={e.latlng} />)
         );
-
         newMarker.addTo(map);
         newMarker.openPopup();
       },
       locationfound: (location) => {
         console.log("location found:", location);
-        setUserLocation(location);
-        console.log("User found at location:", userLocation);
+        // setUserLocation(location);
+        // console.log("User found at location:", userLocation);
       },
 
       locationerror: (error) => {
@@ -85,7 +74,6 @@ const MapWrapper = (props) => {
       },
     });
 
-    console.log("map center:", map.getCenter());
     return null;
   };
 
@@ -101,7 +89,7 @@ const MapWrapper = (props) => {
         url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
       />
       <MapInsert />
-      <Markers db={db} />
+      <Markers db={props.db} />
     </MapContainer>
   );
 };

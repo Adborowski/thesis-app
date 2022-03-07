@@ -19,6 +19,7 @@
 }
 
 .icon {
+  border: 0px solid transparent;
 }
 
 :global(.leaflet-popup-content-wrapper) {

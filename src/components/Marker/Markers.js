@@ -1,9 +1,11 @@
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import ReactDOMServer from "react-dom/server";
 
 const Markers = (props) => {
   const taskData = props.db;
+
   const map = useMap();
 
   const icon = L.icon({
@@ -18,15 +20,17 @@ const Markers = (props) => {
 
   const markerOptions = { icon: icon };
 
-  console.log(taskData);
-
-  taskData.forEach((task) => {
-    const newMarker = L.marker(task.latlng, markerOptions);
-    const popupContent = <h1>I am a popup</h1>;
-    const newPopup = L.popup(popupContent);
-    newMarker.bindPopup(newPopup);
-    newMarker.addTo(map);
-  });
+  // only add the markers to map if the map has a different number than the data received
+  // this is done to prevent marker duplication
+  if (Object.keys(map._layers).length !== taskData.length) {
+    taskData.forEach((task) => {
+      const newMarker = L.marker(task.latlng, markerOptions);
+      newMarker.type = "taskMarker";
+      const popupContent = <h1>I am a popup</h1>;
+      newMarker.bindPopup(ReactDOMServer.renderToStaticMarkup(popupContent));
+      newMarker.addTo(map);
+    });
+  }
 
   return null;
 };
