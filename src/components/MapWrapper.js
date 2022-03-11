@@ -34,7 +34,9 @@ const MapWrapper = (props) => {
       console.log("Firing popupopen", e);
       console.log(e.target._popup._latlng);
       var px = map.project(e.target._popup._latlng); // find the pixel location on the map where the popup anchor is
-      px.y -= e.target._popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
+      px.y -= e.target._popup._container.clientHeight; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
+      // px.x -= e.target._popup._container.clientWidth / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
+
       map.panTo(map.unproject(px), { animate: true }); // pan to new center
       console.log("Layers:", map._layers);
     });
