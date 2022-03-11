@@ -10,6 +10,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --color-1: #6d1cbd;
+  --color-2: #e9c31c;
+}
+
 .main {
   background-color: black;
 }
@@ -27,6 +32,15 @@ body {
 :global(.tooltip) {
   transition: 0.1s all ease;
   animation: fadeIn 0.3s forwards ease;
+}
+
+:global(.button) {
+  color: lime;
+  font-size: 18px;
+  background-color: var(--color-1);
+  color: white;
+  padding: 6px;
+  border-radius: 6px;
 }
 
 @keyframes fadeIn {

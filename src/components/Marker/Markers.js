@@ -28,12 +28,33 @@ const Markers = (props) => {
       const newMarker = L.marker(task.latlng, markerOptions);
       newMarker.type = "taskMarker";
       const popupContent = (
-        <div className={classes.task}>
-          <div className={classes.infoItem}>
-            <div className={classes.label}>Task Title</div>
-            <div className={classes.content}>{task.title}</div>
+        <div className={classes.taskMarker}>
+          <div className={classes.mediaGallery}>
+            <img
+              className={classes.mediaItem}
+              src={"/img/" + task.media[0]}
+              alt={"Content of the task"}
+            ></img>
           </div>
-          I am a popup
+
+          <div className={classes.infoItems}>
+            <div className={classes.infoItem}>
+              <div className={classes.label}>Title</div>
+              <div className={classes.content}>{task.title}</div>
+            </div>
+            <div className={classes.infoItem}>
+              <div className={classes.label}>Description</div>
+              <div className={classes.content}>{task.description}</div>
+            </div>
+            <div className={classes.infoItem}>
+              <div className={classes.label}>Reward</div>
+              <div className={classes.content}>{task.reward}</div>
+            </div>
+          </div>
+
+          <div className={classes.controls}>
+            <div className={classes.button}>SOLVE</div>
+          </div>
         </div>
       );
       newMarker.bindPopup(ReactDOMServer.renderToStaticMarkup(popupContent));

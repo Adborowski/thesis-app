@@ -1,0 +1,46 @@
+.taskMarker {
+  /* background-color: pink; */
+}
+
+.infoItems {
+  padding: 12px;
+}
+
+.controls {
+  padding: 0px 12px 12px 12px;
+}
+
+.infoItem {
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.mediaGallery {
+  border-radius: 50px;
+}
+
+.mediaItem {
+  border-radius: 12px 12px 0px 0px;
+}
+
+.label {
+  font-size: 12px;
+  color: grey;
+}
+
+.content {
+  font-size: 18px;
+}
+
+.button {
+  composes: button from global;
+}
+
+.mediaGallery {
+  /* background-color: lightblue; */
+  margin-bottom: 6px;
+}
+
+.mediaItem {
+  max-width: 100%;
+}
