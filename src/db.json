@@ -2,33 +2,37 @@
   {
     "id": 1,
     "latlng": [51.479785675764, 0.00410292403287],
-    "taskTitle": "Clean up mess",
-    "taskReward": 100,
-    "taskOwnerID": 2,
+    "title": "Clean up mess",
+    "reward": 100,
+    "ownerId": 2,
+    "media": [],
     "attempts": []
   },
   {
     "id": 2,
     "latlng": [51.46109340238, 0.00820293874387],
-    "taskTitle": "Repair a fence",
-    "taskReward": 75,
-    "taskOwnerID": 1,
+    "title": "Repair a fence",
+    "reward": 75,
+    "ownerId": 1,
+    "media": [],
     "attempts": []
   },
   {
     "id": 3,
     "latlng": [51.453476429376, 0.023573298364],
-    "taskTitle": "Remove trash",
-    "taskReward": 90,
-    "taskOwnerID": 2,
+    "title": "Remove trash",
+    "reward": 90,
+    "ownerId": 2,
+    "media": [],
     "attempts": []
   },
   {
     "id": 4,
     "latlng": [51.472, 0.0052],
-    "taskTitle": "Cover up graffiti",
-    "taskReward": 200,
-    "taskOwnerID": 3,
+    "title": "Cover up graffiti",
+    "reward": 200,
+    "ownerId": 3,
+    "media": [],
     "attempts": []
   }
 ]

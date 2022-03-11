@@ -23,9 +23,17 @@
 }
 
 :global(.leaflet-popup-content-wrapper) {
-  border: 1px solid black;
-  width: 90vw;
-  height: 50vh;
+  border: 1px solid red;
+  width: 200px;
+  height: 300px;
+}
+
+@media screen and (max-width: 768px) {
+  :global(.leaflet-popup-content-wrapper) {
+    border: 1px solid black;
+    width: 90vw;
+    height: 50vh;
+  }
 }
 
 :global(.leaflet-popup-content-wrapper .leaflet-popup-content) {

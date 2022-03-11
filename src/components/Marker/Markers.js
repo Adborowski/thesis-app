@@ -2,6 +2,7 @@ import { useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import ReactDOMServer from "react-dom/server";
+import classes from "./Marker.module.css";
 
 const Markers = (props) => {
   const taskData = props.db;
@@ -26,7 +27,15 @@ const Markers = (props) => {
     taskData.forEach((task) => {
       const newMarker = L.marker(task.latlng, markerOptions);
       newMarker.type = "taskMarker";
-      const popupContent = <h1>I am a popup</h1>;
+      const popupContent = (
+        <div className={classes.task}>
+          <div className={classes.infoItem}>
+            <div className={classes.label}>Task Title</div>
+            <div className={classes.content}>{task.title}</div>
+          </div>
+          I am a popup
+        </div>
+      );
       newMarker.bindPopup(ReactDOMServer.renderToStaticMarkup(popupContent));
       newMarker.addTo(map);
     });
