@@ -5,10 +5,23 @@ import "leaflet/dist/leaflet.css";
 import Markers from "./Marker/Markers";
 import L from "leaflet";
 import TaskEditor from "./TaskEditor/TaskEditor";
+import { useState, useEffect } from "react";
+import TaskModal from "./TaskModal/TaskModal";
 
 const MapWrapper = (props) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openTaskModal = () => {
+    const taskModal = document.getElementById("taskModal");
+    taskModal.classList.add("open");
+    console.log("opening task modal");
+  };
+
   const db = props.db;
   console.log(db);
+
+  const [isTaskViewOpen, setTaskViewOpen] = useState(false);
+  const specialClass = ""; // mapWrapper gets specialClass when it enters Task View
 
   const newMarkerIcon = L.icon({
     iconUrl: "./markers/round-pin-2.svg",
@@ -24,6 +37,7 @@ const MapWrapper = (props) => {
     // ^ must be a child of MapContainer
     console.log("Map scripts running...");
     const map = useMap();
+    map.invalidateSize();
 
     map.eachLayer(function (layer) {
       map.removeLayer(layer);
@@ -59,12 +73,21 @@ const MapWrapper = (props) => {
         // create task editor tooltip with predetermined content from TaskEditor
         const newMarker = L.marker(e.latlng, { icon: newMarkerIcon });
         newMarker.type = "editorMarker";
-        newMarker.bindPopup(
-          ReactDOMServer.renderToStaticMarkup(<TaskEditor latlng={e.latlng} />)
-        );
-        newMarker.addTo(map);
-        newMarker.openPopup();
+        newMarker
+          .bindPopup(
+            ReactDOMServer.renderToStaticMarkup(
+              <TaskEditor latlng={e.latlng} />
+            )
+          )
+          .addTo(map)
+          .openPopup();
+        const btnCreateTask = document.getElementById("btnCreateTask");
+        console.log(btnCreateTask);
+        btnCreateTask.addEventListener("click", (e) => {
+          openTaskModal();
+        });
       },
+
       locationfound: (location) => {
         console.log("location found:", location);
         // setUserLocation(location);
@@ -80,19 +103,21 @@ const MapWrapper = (props) => {
   };
 
   return (
-    <MapContainer
-      className={classes.map}
-      center={[51.477928, -0.001545]}
-      zoom={13}
-      tap={false}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
-      />
-      <MapInsert />
-      <Markers db={props.db} />
-    </MapContainer>
+    <div className={classes.mapWrapper}>
+      <MapContainer
+        className={`${classes.map}${specialClass}`}
+        center={[51.477928, -0.001545]}
+        zoom={13}
+        tap={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
+        />
+        <MapInsert />
+        <Markers db={props.db} />
+      </MapContainer>
+    </div>
   );
 };
 

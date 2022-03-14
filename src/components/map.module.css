@@ -1,12 +1,10 @@
-.mapWrapper {
-  background-color: #fafafa;
-  width: 100%;
-  height: 100vh;
-}
-
 .map {
   height: 100vh;
   cursor: crosshair;
+}
+
+.map.taskDetailView {
+  height: 40vh;
 }
 
 .mapContainer {
@@ -14,9 +12,9 @@
   /* do not remove this class */
 }
 
-#map {
+/* #map {
   height: 1000px;
-}
+} */
 
 .icon {
   border: 0px solid transparent;
