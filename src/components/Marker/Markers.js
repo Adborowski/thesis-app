@@ -16,7 +16,7 @@ const Markers = (props) => {
       .then((res) => {
         console.log("...data received from API", res.data);
         if (taskData[0].type === "dummy") {
-          // if dummy data found, switch it to live data
+          // detect dummy fallback
           setTaskData(res.data);
         }
       })
