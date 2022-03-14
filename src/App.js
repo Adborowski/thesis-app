@@ -1,16 +1,15 @@
 import classes from "./app.module.css";
 import MapWrapper from "./components/MapWrapper";
-import dummyData from "./db.json"; // local file-based db
-import axios from "axios";
-import { useState, useEffect } from "react";
+import db from "./db.json"; // local file-based db
 
 function App() {
+  console.log("Data: ", db);
   return (
     <div className={classes.main}>
       <div className={classes.desktopMenu}>
         <div className={classes.title}>thesis-app</div>
       </div>
-      <MapWrapper db={dummyData} />
+      <MapWrapper db={db} />
     </div>
   );
 }
