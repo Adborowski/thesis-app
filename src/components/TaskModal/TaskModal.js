@@ -1,11 +1,22 @@
 import classes from "./taskModal.module.css";
+import TaskEditor from "../TaskEditor/TaskEditor";
 import { useState } from "react";
 
 const TaskModal = (props) => {
-  const openTaskModal = props.openTaskModal;
+  const closeTaskModal = () => {
+    const taskModal = document.getElementById("taskModal");
+    taskModal.classList.remove("open");
+    console.log("closing task modal");
+  };
+
   return (
     <div id="taskModal" className={classes.taskModal}>
-      <h1>task modal</h1>
+      <div className={classes.controls}>
+        <div onClick={closeTaskModal} className={classes.btnCloseModal}>
+          x
+        </div>
+      </div>
+      <TaskEditor latlng={[0, 0]} />
     </div>
   );
 };

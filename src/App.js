@@ -7,12 +7,6 @@ import TaskModal from "./components/TaskModal/TaskModal";
 function App() {
   console.log("Data: ", db);
 
-  const openTaskModal = () => {
-    console.log("opening task modal");
-    const taskModal = document.getElementById("taskModal");
-    taskModal.classList.add("open");
-  };
-
   return (
     <div className={classes.main}>
       <div className={classes.desktopMenu}>
