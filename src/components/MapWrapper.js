@@ -7,18 +7,27 @@ import L from "leaflet";
 import TaskEditor from "./TaskEditor/TaskEditor";
 import { useState, useEffect } from "react";
 import TaskModal from "./TaskModal/TaskModal";
+import axios from "axios";
 
 const MapWrapper = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [markerData, setMarkerData] = useState(props.db);
 
-  const openTaskModal = () => {
-    const taskModal = document.getElementById("taskModal");
-    taskModal.classList.add("open");
-    console.log("opening task modal");
-  };
-
-  const db = props.db;
+  let db = props.db;
   console.log(db);
+
+  useEffect(() => {
+    console.log("Markerdata has changed!", markerData);
+    db = markerData;
+  }, [markerData]);
+
+  function openTaskModal(latlng) {
+    const taskModal = document.getElementById("taskModal");
+    taskModal.dataset.lat = latlng.lat;
+    taskModal.dataset.lng = latlng.lng;
+    taskModal.classList.add("open");
+    // setIsModalOpen(true);
+  }
 
   const [isTaskViewOpen, setTaskViewOpen] = useState(false);
   const specialClass = ""; // mapWrapper gets specialClass when it enters Task View
@@ -33,6 +42,16 @@ const MapWrapper = (props) => {
     className: classes.icon,
   });
 
+  const EditorPopupPanel = () => {
+    return (
+      <div className={"editorPopup"}>
+        <div id="btnOpenEditor" className={"button"}>
+          Create Task
+        </div>
+      </div>
+    );
+  };
+
   const MapInsert = () => {
     // ^ must be a child of MapContainer
     console.log("Map scripts running...");
@@ -42,6 +61,20 @@ const MapWrapper = (props) => {
     map.eachLayer(function (layer) {
       map.removeLayer(layer);
     });
+
+    const addTileLayer = () => {
+      new L.tileLayer(
+        "https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2",
+        {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          minZoom: 1,
+          maxZoom: 15,
+        }
+      ).addTo(map);
+    };
+
+    addTileLayer();
 
     // center view on popup when it opens
     map.on("popupopen", function (e) {
@@ -65,6 +98,7 @@ const MapWrapper = (props) => {
 
     useMapEvents({
       click: (e) => {
+        const clickLocation = e.latlng;
         console.log(e.latlng);
         console.log("Layers:", map._layers);
 
@@ -74,17 +108,13 @@ const MapWrapper = (props) => {
         const newMarker = L.marker(e.latlng, { icon: newMarkerIcon });
         newMarker.type = "editorMarker";
         newMarker
-          .bindPopup(
-            ReactDOMServer.renderToStaticMarkup(
-              <TaskEditor latlng={e.latlng} />
-            )
-          )
+          .bindPopup(ReactDOMServer.renderToStaticMarkup(<EditorPopupPanel />))
           .addTo(map)
           .openPopup();
-        const btnCreateTask = document.getElementById("btnCreateTask");
-        console.log(btnCreateTask);
-        btnCreateTask.addEventListener("click", (e) => {
-          openTaskModal();
+        const btnOpenEditor = document.getElementById("btnOpenEditor");
+        console.log(btnOpenEditor);
+        btnOpenEditor.addEventListener("click", (e) => {
+          openTaskModal(clickLocation);
         });
       },
 
@@ -110,12 +140,8 @@ const MapWrapper = (props) => {
         zoom={13}
         tap={false}
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
-        />
         <MapInsert />
-        <Markers db={props.db} />
+        <Markers db={markerData} />
       </MapContainer>
     </div>
   );

@@ -7,6 +7,8 @@ import TaskModal from "./components/TaskModal/TaskModal";
 function App() {
   console.log("Data: ", db);
 
+  const [newTaskLocation, setNewTaskLocation] = useState([0, 0]);
+
   return (
     <div className={classes.main}>
       <div className={classes.desktopMenu}>

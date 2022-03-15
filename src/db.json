@@ -2,7 +2,7 @@
   {
     "id": 1,
     "latlng": [51.479785675764, 0.00410292403287],
-    "title": "Clean up mess",
+    "title": " [DUMMY] Clean up mess",
     "description": "There is a mess. Come clean it up. Make sure you get all of it.",
     "reward": 100,
     "ownerId": 2,
@@ -12,7 +12,7 @@
   {
     "id": 2,
     "latlng": [51.46109340238, 0.00820293874387],
-    "title": "Repair a fence",
+    "title": "[DUMMY] Repair a fence",
     "description": "The face is broken. You might need your own wood. Make sure you remove the broken parts.",
     "reward": 75,
     "ownerId": 1,
@@ -22,7 +22,7 @@
   {
     "id": 3,
     "latlng": [51.453476429376, 0.023573298364],
-    "title": "Remove trash",
+    "title": "[DUMMY] Remove trash",
     "description": "Trash everywhere. I don't know what happened. There is too much of it for us to clean it up.",
     "reward": 90,
     "ownerId": 2,
@@ -32,7 +32,7 @@
   {
     "id": 4,
     "latlng": [51.472, 0.0052],
-    "title": "Cover up graffiti",
+    "title": "[DUMMY] Cover up graffiti",
     "description": "There is an ugly offensive graffiti on the wall. Please remove it. You can paint over it any color. Bring your own paint.",
     "reward": 200,
     "ownerId": 3,

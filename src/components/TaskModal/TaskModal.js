@@ -10,7 +10,7 @@ const TaskModal = (props) => {
   };
 
   return (
-    <div id="taskModal" className={classes.taskModal}>
+    <div id="taskModal" data-lat="" data-lng="" className={classes.taskModal}>
       <div className={classes.controls}>
         <div onClick={closeTaskModal} className={classes.btnCloseModal}>
           x
