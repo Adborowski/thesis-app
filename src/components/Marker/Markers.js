@@ -8,8 +8,7 @@ import dummyData from "../../db.json";
 
 const Markers = (props) => {
   // const [markerData, setMarkerData] = useState();
-  const taskData = dummyData;
-
+  const taskData = props.db;
   console.log("TASKDATA AT MARKERS:", taskData);
 
   const map = useMap();

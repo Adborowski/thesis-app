@@ -18,25 +18,5 @@
     "ownerId": 1,
     "media": ["jerry.jpeg"],
     "attempts": []
-  },
-  {
-    "id": 3,
-    "latlng": [51.453476429376, 0.023573298364],
-    "title": "[DUMMY] Remove trash",
-    "description": "Trash everywhere. I don't know what happened. There is too much of it for us to clean it up.",
-    "reward": 90,
-    "ownerId": 2,
-    "media": ["jerry.jpeg"],
-    "attempts": []
-  },
-  {
-    "id": 4,
-    "latlng": [51.472, 0.0052],
-    "title": "[DUMMY] Cover up graffiti",
-    "description": "There is an ugly offensive graffiti on the wall. Please remove it. You can paint over it any color. Bring your own paint.",
-    "reward": 200,
-    "ownerId": 3,
-    "media": ["jerry.jpeg"],
-    "attempts": []
   }
 ]

@@ -1,11 +1,11 @@
 import classes from "./app.module.css";
 import MapWrapper from "./components/MapWrapper";
-import db from "./db.json"; // local file-based db
+import dummyData from "./db.json"; // local file-based db
 import { useState } from "react";
 import TaskModal from "./components/TaskModal/TaskModal";
 
 function App() {
-  console.log("Data: ", db);
+  console.log("Data: ", dummyData);
 
   const [newTaskLocation, setNewTaskLocation] = useState([0, 0]);
 
@@ -14,7 +14,7 @@ function App() {
       <div className={classes.desktopMenu}>
         <div className={classes.title}>thesis-app</div>
       </div>
-      <MapWrapper db={db} />
+      <MapWrapper data={dummyData} />
       <TaskModal />
     </div>
   );

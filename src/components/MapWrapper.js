@@ -1,33 +1,29 @@
 import classes from "./map.module.css";
-import { MapContainer, TileLayer, useMapEvents, useMap } from "react-leaflet";
+import { MapContainer, useMapEvents, useMap } from "react-leaflet";
 import ReactDOMServer from "react-dom/server";
 import "leaflet/dist/leaflet.css";
 import Markers from "./Marker/Markers";
 import L from "leaflet";
-import TaskEditor from "./TaskEditor/TaskEditor";
 import { useState, useEffect } from "react";
-import TaskModal from "./TaskModal/TaskModal";
 import axios from "axios";
+import dummyData from "../db.json";
 
 const MapWrapper = (props) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [markerData, setMarkerData] = useState(props.db);
+  const [markerData, setMarkerData] = useState(dummyData);
 
-  let db = props.db;
-  console.log(db);
-
+  // Make a request for a user with a given ID
   useEffect(() => {
-    console.log("Markerdata has changed!", markerData);
-    db = markerData;
-  }, [markerData]);
+    console.log("markerData state", markerData);
 
-  function openTaskModal(latlng) {
-    const taskModal = document.getElementById("taskModal");
-    taskModal.dataset.lat = latlng.lat;
-    taskModal.dataset.lng = latlng.lng;
-    taskModal.classList.add("open");
-    // setIsModalOpen(true);
-  }
+    axios
+      .get("http://tiszuk.com/tasks")
+      .then(function (response) {
+        console.log("axios data:", response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   const [isTaskViewOpen, setTaskViewOpen] = useState(false);
   const specialClass = ""; // mapWrapper gets specialClass when it enters Task View
@@ -57,6 +53,15 @@ const MapWrapper = (props) => {
     console.log("Map scripts running...");
     const map = useMap();
     map.invalidateSize();
+
+    function openTaskModal(latlng) {
+      const taskModal = document.getElementById("taskModal");
+      taskModal.dataset.lat = latlng.lat;
+      taskModal.dataset.lng = latlng.lng;
+      taskModal.classList.add("open");
+      // map.closePopup();
+      // setIsModalOpen(true);
+    }
 
     map.eachLayer(function (layer) {
       map.removeLayer(layer);
