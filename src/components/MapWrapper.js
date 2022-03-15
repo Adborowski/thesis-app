@@ -16,9 +16,10 @@ const MapWrapper = (props) => {
     console.log("markerData state", markerData);
 
     axios
-      .get("http://tiszuk.com/tasks")
+      .get("https://tiszuk.com/tasks")
       .then(function (response) {
-        console.log("axios data:", response.data);
+        console.log("axios data:", response);
+        setMarkerData(response.data);
       })
       .catch(function (error) {
         console.log(error);
