@@ -4,12 +4,35 @@ import { MapContainer, TileLayer, useMap, Marker } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import EditorIcon from "../Icons/EditorIcon";
+import axios from "axios";
 
 const TaskEditor = (props) => {
   const [taskTitle, setTaskTitle] = useState();
   const [taskDescription, setTaskDescription] = useState();
   const [taskReward, setTaskReward] = useState();
   const [taskLatlng, setTaskLatlng] = useState([0, 0]);
+  const [taskId, setTaskId] = useState();
+
+  // figure out which Id is next in the database
+  const getNewTaskId = () => {
+    let taskId;
+    axios
+      .get("https://tiszuk.com/tasks")
+      .then(function (response) {
+        const ids = response.data.map((task) => {
+          return task.id;
+        });
+        let taskId = Math.max(...ids) + 1;
+        setTaskId(taskId);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getNewTaskId();
+  }, []);
 
   const MapScript = () => {
     const map = useMap();
@@ -25,9 +48,9 @@ const TaskEditor = (props) => {
   // dummy latlng is [0,0]
   useEffect(() => {
     if (props.latlng[0] === 0) {
-      console.log("received dummy latlng props", props.latlng);
+      // console.log("received dummy latlng props", props.latlng);
     } else {
-      console.log("received real latlng props", props.latlng);
+      // console.log("received real latlng props", props.latlng);
       setTaskLatlng(props.latlng);
     }
   }, []);
@@ -49,12 +72,23 @@ const TaskEditor = (props) => {
 
   const handleTaskSubmit = (e) => {
     const newTaskData = {
+      id: taskId,
       title: taskTitle,
       description: taskDescription,
       reward: taskReward,
       latlng: props.latlng,
+      ownerId: 1,
     };
     console.log("Creating new task...", newTaskData);
+
+    axios
+      .post("https://tiszuk.com/create-task", newTaskData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   if (props.latlng) {

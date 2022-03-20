@@ -15,7 +15,6 @@ const MapWrapper = (props) => {
   // Make a request for a user with a given ID
   useEffect(() => {
     console.log("markerData state", markerData);
-
     axios
       .get("https://tiszuk.com/tasks")
       .then(function (response) {
@@ -27,7 +26,6 @@ const MapWrapper = (props) => {
       });
   }, []);
 
-  const [isTaskViewOpen, setTaskViewOpen] = useState(false);
   const specialClass = ""; // mapWrapper gets specialClass when it enters Task View
 
   // prettier-ignore
