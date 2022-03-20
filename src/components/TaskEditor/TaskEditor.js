@@ -1,8 +1,9 @@
 import classes from "./TaskEditor.module.css";
 import { useState, useEffect } from "react";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, useMap, Marker } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import EditorIcon from "../Icons/EditorIcon";
 
 const TaskEditor = (props) => {
   const [taskTitle, setTaskTitle] = useState();
@@ -82,7 +83,7 @@ const TaskEditor = (props) => {
               url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
             />
             <MapScript />
-            <Marker />
+            <Marker icon={EditorIcon()} position={taskLatlng} />
           </MapContainer>
         </div>
 

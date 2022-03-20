@@ -5,25 +5,13 @@ import "leaflet/dist/leaflet.css";
 import ReactDOMServer from "react-dom/server";
 import classes from "./Marker.module.css";
 import dummyData from "../../db.json";
+import Icon from "../Icons/Icon";
 
 const Markers = (props) => {
-  // const [markerData, setMarkerData] = useState();
   const taskData = props.db;
   console.log("TASKDATA AT MARKERS:", taskData);
 
   const map = useMap();
-
-  const icon = L.icon({
-    iconUrl: "./markers/round-pin.svg",
-    // shadowUrl: 'leaf-shadow.png',
-    iconSize: [30, 30], // size of the icon
-    shadowSize: [50, 64], // size of the shadow
-    iconAnchor: [15, 30], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62], // the same for the shadow
-    popupAnchor: [0, -30], // point from which the popup should open relative to the iconAnchor
-  });
-
-  const markerOptions = { icon: icon };
 
   const refreshMarkers = () => {
     map.eachLayer(function (layer) {
@@ -35,7 +23,7 @@ const Markers = (props) => {
 
     if (Object.keys(map._layers).length !== taskData.length) {
       taskData.forEach((task) => {
-        const newMarker = L.marker(task.latlng, markerOptions);
+        const newMarker = L.marker(task.latlng, { icon: Icon() });
         newMarker.type = "taskMarker";
         const popupContent = (
           <div className={classes.taskMarker}>

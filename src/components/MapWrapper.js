@@ -7,7 +7,7 @@ import L from "leaflet";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import dummyData from "../db.json";
-import { Link } from "react-router-dom";
+import EditorIcon from "./Icons/EditorIcon";
 
 const MapWrapper = (props) => {
   const [markerData, setMarkerData] = useState(dummyData);
@@ -30,17 +30,8 @@ const MapWrapper = (props) => {
   const [isTaskViewOpen, setTaskViewOpen] = useState(false);
   const specialClass = ""; // mapWrapper gets specialClass when it enters Task View
 
-  const newMarkerIcon = L.icon({
-    iconUrl: "./markers/round-pin-2.svg",
-    iconSize: [30, 30], // size of the icon
-    shadowSize: [30, 30], // size of the shadow
-    iconAnchor: [15, 30], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62], // the same for the shadow
-    popupAnchor: [0, -30], // point from which the popup should open relative to the iconAnchor
-    className: classes.icon,
-  });
-
   // prettier-ignore
+  // the popup which contains controls for a new marker. Opens when user clicks on empty spot on map. Only takes simple static JS.
   const EditorPopupPanel = () => {
     return (
       <div className={"editorPopup"}>
@@ -49,14 +40,16 @@ const MapWrapper = (props) => {
     );
   };
 
+  // MapInsert contains scripts which need to run with access to the map reference via useMap hook
+  // such scripts must be run from a child of MapContainer
   const MapInsert = () => {
-    // ^ must be a child of MapContainer
+    // ^ must be returned as a child of MapContainer
     console.log("Map scripts running...");
     const map = useMap();
     map.invalidateSize();
 
     const createEditorPopup = (latlng) => {
-      const newMarker = L.marker(latlng, { icon: newMarkerIcon });
+      const newMarker = L.marker(latlng, { icon: EditorIcon() });
       newMarker.type = "editorMarker";
       newMarker
         .bindPopup(ReactDOMServer.renderToStaticMarkup(<EditorPopupPanel />))
@@ -80,7 +73,7 @@ const MapWrapper = (props) => {
           attribution:
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
           minZoom: 1,
-          maxZoom: 15,
+          maxZoom: 20,
         }
       ).addTo(map);
     };
@@ -93,8 +86,6 @@ const MapWrapper = (props) => {
       console.log(e.target._popup._latlng);
       var px = map.project(e.target._popup._latlng); // find the pixel location on the map where the popup anchor is
       px.y -= e.target._popup._container.clientHeight; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
-      // px.x -= e.target._popup._container.clientWidth / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
-
       map.panTo(map.unproject(px), { animate: true }); // pan to new center
       console.log("Layers:", map._layers);
     });
@@ -112,8 +103,6 @@ const MapWrapper = (props) => {
         const clickLocation = e.latlng;
         console.log(e.latlng);
         console.log("Layers:", map._layers);
-
-        // FUNCTION: CREATE TASK EDITOR (LATLNG)
         createEditorPopup(e.latlng);
       },
 
