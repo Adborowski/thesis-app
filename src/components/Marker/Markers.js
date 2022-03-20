@@ -21,8 +21,9 @@ const Markers = (props) => {
       }
     });
 
-    if (Object.keys(map._layers).length !== taskData.length) {
+    if (Object.keys(map._layers).length < 2) {
       taskData.forEach((task) => {
+        console.log("LOADING TASK:", task.latlng);
         const newMarker = L.marker(task.latlng, { icon: Icon() });
         newMarker.type = "taskMarker";
         const popupContent = (

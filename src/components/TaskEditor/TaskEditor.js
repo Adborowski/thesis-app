@@ -73,11 +73,12 @@ const TaskEditor = (props) => {
   const handleTaskSubmit = (e) => {
     const newTaskData = {
       id: taskId,
+      ownerId: 1,
+      media: ["jerry.jpeg"],
       title: taskTitle,
       description: taskDescription,
       reward: taskReward,
-      latlng: props.latlng,
-      ownerId: 1,
+      latlng: [props.latlng.lat, props.latlng.lng],
     };
     console.log("Creating new task...", newTaskData);
 
