@@ -10,7 +10,6 @@ import dummyData from "../db.json";
 
 const MapWrapper = (props) => {
   const [markerData, setMarkerData] = useState(dummyData);
-  const [newMarkerLocation, setNewMarkerLocation] = useState();
 
   // Make a request for a user with a given ID
   useEffect(() => {
