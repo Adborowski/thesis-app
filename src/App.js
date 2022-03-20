@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useMap } from "react-leaflet";
 import TaskModal from "./components/TaskModal/TaskModal";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import TaskEditor from "./components/TaskEditor/TaskEditor";
 
 function App() {
   console.log("Data: ", dummyData);
@@ -19,6 +20,7 @@ function App() {
     taskModal.classList.add("open");
   };
 
+  // prettier-ignore
   return (
     <div className={classes.main}>
       <div className={classes.desktopMenu}>
@@ -27,13 +29,12 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            <MapWrapper
-              openTaskModal={openTaskModal}
-              data={dummyData}
-            ></MapWrapper>
-          }
+          element={<MapWrapper openTaskModal={openTaskModal} data={dummyData}></MapWrapper>}
         />
+        <Route
+        path="/editor"
+        element={<TaskEditor latlng={[0,0]}/>}
+      />
       </Routes>
       <TaskModal latlng={newTaskLocation} />
     </div>
