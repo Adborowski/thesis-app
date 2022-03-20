@@ -34,18 +34,27 @@ const TaskEditor = (props) => {
   };
 
   const handleTaskSubmit = (e) => {
-    console.log("Creating new task...");
-    console.log("Title:", taskTitle);
-    console.log("Description:", taskDescription);
-    console.log("Reward", taskReward);
-    console.log("Latlng:", props.latlng);
+    const newTaskData = {
+      title: taskTitle,
+      description: taskDescription,
+      reward: taskReward,
+      latlng: props.latlng,
+    };
+    console.log("Creating new task...", newTaskData);
   };
 
   if (props.latlng) {
     return (
       <div className={classes.TaskEditor}>
-        <h3>{taskLatlng ? taskLatlng.lat : "dummy"}</h3>
-        <h3>{taskLatlng ? taskLatlng.lng : "dummy"}</h3>
+        <div className={classes.latlng}>
+          <div className={classes.position}>
+            {taskLatlng ? taskLatlng.lat : "dummy"}
+          </div>
+          <div className={classes.position}>
+            {taskLatlng ? taskLatlng.lng : "dummy"}
+          </div>
+        </div>
+
         <form className={classes.form}>
           <input
             onChange={handleTitleChange}

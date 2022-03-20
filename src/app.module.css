@@ -41,6 +41,7 @@ body {
   color: white;
   padding: 6px;
   border-radius: 6px;
+  text-align: center;
 }
 
 @keyframes fadeIn {

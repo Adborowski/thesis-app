@@ -1,9 +1,23 @@
 .TaskEditor {
   transition: 0.3s all ease;
+  max-width: 500px;
+  margin: auto;
+  background-color: #fafafa;
+  padding: 12px;
+  border-radius: 6px;
 }
 
 .form {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 2fr 2fr 2fr 1fr;
   grid-gap: 6px;
+}
+
+.latlng {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  font-size: 10px;
+  text-align: center;
+  color: lightgray;
+  margin-bottom: 12px;
 }
