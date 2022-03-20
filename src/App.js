@@ -20,9 +20,6 @@ function App() {
 
   const openTaskModal = (latlng) => {
     console.log("APP.JS OPEN TASK MODAL:", latlng);
-    const taskModal = document.getElementById("taskModal");
-    taskModal.dataset.lat = latlng.lat;
-    taskModal.dataset.lng = latlng.lng;
     setNewTaskLocation(latlng);
     handleEditorRedirect();
   };
@@ -43,7 +40,6 @@ function App() {
         element={<TaskEditor latlng={newTaskLocation}/>}
       />
       </Routes>
-      <TaskModal latlng={newTaskLocation} />
     </div>
   );
 }

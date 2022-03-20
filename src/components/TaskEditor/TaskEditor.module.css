@@ -1,3 +1,9 @@
 .TaskEditor {
   transition: 0.3s all ease;
 }
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 6px;
+}
