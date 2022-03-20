@@ -1,30 +1,50 @@
 import classes from "./map.module.css";
-import { MapContainer, useMapEvents, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  useMapEvents,
+  useMap,
+  Marker,
+  Popup,
+  TileLayer,
+  Map,
+} from "react-leaflet";
 import ReactDOMServer from "react-dom/server";
 import "leaflet/dist/leaflet.css";
 import Markers from "./Marker/Markers";
 import L from "leaflet";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import dummyData from "../db.json";
+import React from "react";
 
-const MapWrapper = (props) => {
-  const [markerData, setMarkerData] = useState(dummyData);
+const MapWrapper = React.forwardRef((props, ref) => {
+  const [taskData, setTaskData] = useState(dummyData); // dummyData has one item and is required
+  console.log("taskData at start of MapWrapper", taskData);
 
-  // Make a request for a user with a given ID
   useEffect(() => {
-    console.log("markerData state", markerData);
-
     axios
       .get("https://tiszuk.com/tasks")
       .then(function (response) {
         console.log("axios data:", response);
-        setMarkerData(response.data);
+        setTaskData(response.data);
+        console.log("new taskData:", taskData);
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
+
+  const icon = L.icon({
+    iconUrl: "./markers/round-pin.svg",
+    // shadowUrl: 'leaf-shadow.png',
+    iconSize: [30, 30], // size of the icon
+    shadowSize: [50, 64], // size of the shadow
+    iconAnchor: [15, 30], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62], // the same for the shadow
+    popupAnchor: [0, -30], // point from which the popup should open relative to the iconAnchor
+  });
+
+  const handleNewMarker = props.handleNewMarker;
 
   const [isTaskViewOpen, setTaskViewOpen] = useState(false);
   const specialClass = ""; // mapWrapper gets specialClass when it enters Task View
@@ -53,20 +73,15 @@ const MapWrapper = (props) => {
     // ^ must be a child of MapContainer
     console.log("Map scripts running...");
     const map = useMap();
-    map.invalidateSize();
+    console.log(map._layers);
+    // map.invalidateSize();
 
     function openTaskModal(latlng) {
       const taskModal = document.getElementById("taskModal");
       taskModal.dataset.lat = latlng.lat;
       taskModal.dataset.lng = latlng.lng;
       taskModal.classList.add("open");
-      // map.closePopup();
-      // setIsModalOpen(true);
     }
-
-    map.eachLayer(function (layer) {
-      map.removeLayer(layer);
-    });
 
     const addTileLayer = () => {
       new L.tileLayer(
@@ -80,18 +95,13 @@ const MapWrapper = (props) => {
       ).addTo(map);
     };
 
-    addTileLayer();
+    // addTileLayer();
 
     // center view on popup when it opens
     map.on("popupopen", function (e) {
-      console.log("Firing popupopen", e);
-      console.log(e.target._popup._latlng);
       var px = map.project(e.target._popup._latlng); // find the pixel location on the map where the popup anchor is
       px.y -= e.target._popup._container.clientHeight; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
-      // px.x -= e.target._popup._container.clientWidth / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
-
       map.panTo(map.unproject(px), { animate: true }); // pan to new center
-      console.log("Layers:", map._layers);
     });
 
     map.on("popupclose", function (e) {
@@ -121,6 +131,7 @@ const MapWrapper = (props) => {
         console.log(btnOpenEditor);
         btnOpenEditor.addEventListener("click", (e) => {
           openTaskModal(clickLocation);
+          handleNewMarker(clickLocation);
         });
       },
 
@@ -146,11 +157,27 @@ const MapWrapper = (props) => {
         zoom={13}
         tap={false}
       >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
+        />
+
         <MapInsert />
-        <Markers db={markerData} />
+
+        <React.Fragment>
+          {taskData.map((task) => {
+            <Marker
+              key={task.id}
+              icon={icon}
+              position={[51.479785675764, 0.00410292403287]}
+            >
+              <Popup>Hello I am popup at {task.latlng}</Popup>
+            </Marker>;
+          })}
+        </React.Fragment>
       </MapContainer>
     </div>
   );
-};
+});
 
 export default MapWrapper;

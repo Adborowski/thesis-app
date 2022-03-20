@@ -1,8 +1,14 @@
 import classes from "./taskModal.module.css";
 import TaskEditor from "../TaskEditor/TaskEditor";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const TaskModal = (props) => {
+  useEffect(() => {
+    if (props.latlng !== [0, 0]) {
+      console.log(props.latlng);
+    }
+  }, [props.latlng]);
+
   const closeTaskModal = () => {
     const taskModal = document.getElementById("taskModal");
     taskModal.classList.remove("open");

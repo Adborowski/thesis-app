@@ -1,17 +1,27 @@
-import { useMap, Marker } from "react-leaflet";
+import { useMap, Marker, Popup } from "react-leaflet";
 import { useState, useEffect } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import ReactDOMServer from "react-dom/server";
 import classes from "./Marker.module.css";
 import dummyData from "../../db.json";
+import TaskPopup from "./TaskPopup";
+import axios from "axios";
 
 const Markers = (props) => {
-  // const [markerData, setMarkerData] = useState();
-  const taskData = props.db;
-  console.log("TASKDATA AT MARKERS:", taskData);
+  const [taskData, setTaskData] = useState(props.db);
 
-  const map = useMap();
+  // useEffect(() => {
+  //   axios
+  //     .get("https://tiszuk.com/tasks")
+  //     .then(function (response) {
+  //       console.log("axios data:", response);
+  //       setTaskData(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   const icon = L.icon({
     iconUrl: "./markers/round-pin.svg",
@@ -23,11 +33,34 @@ const Markers = (props) => {
     popupAnchor: [0, -30], // point from which the popup should open relative to the iconAnchor
   });
 
+  let returnContent = (
+    <Marker icon={icon} position={[51.479785675764, 0.00410292403287]}>
+      <Popup>DEFAULT</Popup>
+    </Marker>
+  );
+
+  useEffect(() => {
+    console.log("taskData changed at Markers:", taskData);
+    setTaskData(taskData);
+
+    returnContent = taskData.map((task) => {
+      <Marker icon={icon} position={task.latlng}>
+        <Popup>Hello I am popup at {task.latlng}</Popup>
+      </Marker>;
+
+      console.log(returnContent);
+    });
+  }, [taskData]);
+
+  const map = useMap();
+
   const markerOptions = { icon: icon };
 
+  // hoping to deprecate this
   const refreshMarkers = () => {
     map.eachLayer(function (layer) {
       if (!layer._url) {
+        console.log("removing all markers");
         // everything except for the tile layer which has a _url
         map.removeLayer(layer);
       }
@@ -73,9 +106,11 @@ const Markers = (props) => {
     }
   };
 
-  refreshMarkers(); // initial
-
-  return null;
+  return taskData.map((task) => {
+    <Marker icon={icon} position={[51.479785675764, 0.00410292403287]}>
+      <Popup>Hello I am popup at {task.latlng}</Popup>
+    </Marker>;
+  });
 };
 
 export default Markers;

@@ -8,15 +8,5 @@
     "ownerId": 2,
     "media": ["jerry.jpeg"],
     "attempts": []
-  },
-  {
-    "id": 2,
-    "latlng": [51.46109340238, 0.00820293874387],
-    "title": "[DUMMY] Repair a fence",
-    "description": "The face is broken. You might need your own wood. Make sure you remove the broken parts.",
-    "reward": 75,
-    "ownerId": 1,
-    "media": ["jerry.jpeg"],
-    "attempts": []
   }
 ]

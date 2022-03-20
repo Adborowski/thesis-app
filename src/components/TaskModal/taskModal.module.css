@@ -2,14 +2,25 @@
   background-color: rgba(255, 255, 255, 0.8);
   padding: 24px;
   position: fixed;
+  z-index: 5000;
   top: 100vh;
   height: 100%;
-  z-index: 5000;
-  transition: 0.3s all ease;
+  transition: 0.5s all ease;
 }
 
 :global(.open) {
   top: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .taskModal {
+    top: 0;
+    left: -100vw;
+  }
+
+  :global(.open) {
+    left: 0;
+  }
 }
 
 .controls {
