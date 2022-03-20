@@ -6,11 +6,19 @@ const TaskEditor = (props) => {
   const [taskTitle, setTaskTitle] = useState();
   const [taskDescription, setTaskDescription] = useState();
   const [taskReward, setTaskReward] = useState();
-  const [taskLatlng, setTaskLatlng] = useState(props.latlng);
+  const [taskLatlng, setTaskLatlng] = useState();
 
   useEffect(() => {
-    setTaskLatlng(props.latlng);
-  }, [props.latlng]);
+    if (props.latlng[0] === 0) {
+      // dummy latlng is [0,0]
+      console.log("received dummy props", props.latlng);
+    } else {
+      console.log("received real props", props.latlng);
+      setTaskLatlng(props.latlng);
+    }
+  }, []);
+
+  console.log(props.latlng);
 
   const handleTitleChange = (e) => {
     console.log(e.target.value);
@@ -32,13 +40,14 @@ const TaskEditor = (props) => {
     console.log("Title:", taskTitle);
     console.log("Description:", taskDescription);
     console.log("Reward", taskReward);
-    console.log("Latlng:", taskLatlng);
+    console.log("Latlng:", props.latlng);
   };
 
   if (props.latlng) {
     return (
       <div className={classes.TaskEditor}>
-        <h3>Task name</h3>
+        <h3>{taskLatlng ? taskLatlng.lat : "dummy"}</h3>
+        <h3>{taskLatlng ? taskLatlng.lng : "dummy"}</h3>
         <form>
           <input
             onChange={handleTitleChange}

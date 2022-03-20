@@ -7,6 +7,7 @@ import L from "leaflet";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import dummyData from "../db.json";
+import { Link } from "react-router-dom";
 
 const MapWrapper = (props) => {
   const [markerData, setMarkerData] = useState(dummyData);
@@ -39,12 +40,11 @@ const MapWrapper = (props) => {
     className: classes.icon,
   });
 
+  // prettier-ignore
   const EditorPopupPanel = () => {
     return (
       <div className={"editorPopup"}>
-        <div id="btnOpenEditor" className={"button"}>
-          Create Task
-        </div>
+        <div id="btnOpenEditor" className={"button"}>Create Task</div>
       </div>
     );
   };
