@@ -10,6 +10,7 @@ import dummyData from "../db.json";
 
 const MapWrapper = (props) => {
   const [markerData, setMarkerData] = useState(dummyData);
+  const [newMarkerLocation, setNewMarkerLocation] = useState();
 
   // Make a request for a user with a given ID
   useEffect(() => {
@@ -55,14 +56,19 @@ const MapWrapper = (props) => {
     const map = useMap();
     map.invalidateSize();
 
-    function openTaskModal(latlng) {
-      const taskModal = document.getElementById("taskModal");
-      taskModal.dataset.lat = latlng.lat;
-      taskModal.dataset.lng = latlng.lng;
-      taskModal.classList.add("open");
-      // map.closePopup();
-      // setIsModalOpen(true);
-    }
+    const createEditorPopup = (latlng) => {
+      const newMarker = L.marker(latlng, { icon: newMarkerIcon });
+      newMarker.type = "editorMarker";
+      newMarker
+        .bindPopup(ReactDOMServer.renderToStaticMarkup(<EditorPopupPanel />))
+        .addTo(map)
+        .openPopup();
+      const btnOpenEditor = document.getElementById("btnOpenEditor");
+      console.log(btnOpenEditor);
+      btnOpenEditor.addEventListener("click", (e) => {
+        props.openTaskModal(latlng);
+      });
+    };
 
     map.eachLayer(function (layer) {
       map.removeLayer(layer);
@@ -109,19 +115,7 @@ const MapWrapper = (props) => {
         console.log("Layers:", map._layers);
 
         // FUNCTION: CREATE TASK EDITOR (LATLNG)
-
-        // create task editor tooltip with predetermined content from TaskEditor
-        const newMarker = L.marker(e.latlng, { icon: newMarkerIcon });
-        newMarker.type = "editorMarker";
-        newMarker
-          .bindPopup(ReactDOMServer.renderToStaticMarkup(<EditorPopupPanel />))
-          .addTo(map)
-          .openPopup();
-        const btnOpenEditor = document.getElementById("btnOpenEditor");
-        console.log(btnOpenEditor);
-        btnOpenEditor.addEventListener("click", (e) => {
-          openTaskModal(clickLocation);
-        });
+        createEditorPopup(e.latlng);
       },
 
       locationfound: (location) => {

@@ -3,6 +3,8 @@ import TaskEditor from "../TaskEditor/TaskEditor";
 import { useState } from "react";
 
 const TaskModal = (props) => {
+  console.log(props);
+
   const closeTaskModal = () => {
     const taskModal = document.getElementById("taskModal");
     taskModal.classList.remove("open");
@@ -10,7 +12,7 @@ const TaskModal = (props) => {
   };
 
   return (
-    <div id="taskModal" data-lat="" data-lng="" className={classes.taskModal}>
+    <div id="taskModal" data-lat={5} data-lng={5} className={classes.taskModal}>
       <div className={classes.controls}>
         <div onClick={closeTaskModal} className={classes.btnCloseModal}>
           x

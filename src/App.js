@@ -9,13 +9,22 @@ function App() {
 
   const [newTaskLocation, setNewTaskLocation] = useState([0, 0]);
 
+  const openTaskModal = (latlng) => {
+    console.log("APP.JS OPEN TASK MODAL:", latlng);
+    setNewTaskLocation(latlng);
+    const taskModal = document.getElementById("taskModal");
+    taskModal.dataset.lat = latlng.lat;
+    taskModal.dataset.lng = latlng.lng;
+    taskModal.classList.add("open");
+  };
+
   return (
     <div className={classes.main}>
       <div className={classes.desktopMenu}>
         <div className={classes.title}>thesis-app</div>
       </div>
-      <MapWrapper data={dummyData} />
-      <TaskModal />
+      <MapWrapper openTaskModal={openTaskModal} data={dummyData}></MapWrapper>
+      <TaskModal latlng={newTaskLocation} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import classes from "./TaskEditor.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // this is the content of the task editor popup
 
 const TaskEditor = (props) => {
@@ -7,13 +7,33 @@ const TaskEditor = (props) => {
   const [taskDescription, setTaskDescription] = useState();
   const [taskReward, setTaskReward] = useState();
   const [taskLatlng, setTaskLatlng] = useState(props.latlng);
-  const handleTitleChange = (e) => {};
 
-  const handleRewardChange = (e) => {};
+  useEffect(() => {
+    setTaskLatlng(props.latlng);
+  }, [props.latlng]);
 
-  const handleDescriptionChange = (e) => {};
+  const handleTitleChange = (e) => {
+    console.log(e.target.value);
+    setTaskTitle(e.target.value);
+  };
 
-  const handleTaskSubmit = (e) => {};
+  const handleRewardChange = (e) => {
+    console.log(e.target.value);
+    setTaskReward(e.target.value);
+  };
+
+  const handleDescriptionChange = (e) => {
+    console.log(e.target.value);
+    setTaskDescription(e.target.value);
+  };
+
+  const handleTaskSubmit = (e) => {
+    console.log("Creating new task...");
+    console.log("Title:", taskTitle);
+    console.log("Description:", taskDescription);
+    console.log("Reward", taskReward);
+    console.log("Latlng:", taskLatlng);
+  };
 
   if (props.latlng) {
     return (
