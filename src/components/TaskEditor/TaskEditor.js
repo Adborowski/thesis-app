@@ -1,12 +1,25 @@
 import classes from "./TaskEditor.module.css";
 import { useState, useEffect } from "react";
-// this is the content of the task editor popup
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 const TaskEditor = (props) => {
   const [taskTitle, setTaskTitle] = useState();
   const [taskDescription, setTaskDescription] = useState();
   const [taskReward, setTaskReward] = useState();
-  const [taskLatlng, setTaskLatlng] = useState();
+  const [taskLatlng, setTaskLatlng] = useState([0, 0]);
+
+  const MapScript = () => {
+    const map = useMap();
+
+    useEffect(() => {
+      console.log("new taskLatLng", taskLatlng);
+      map.panTo(taskLatlng);
+    }, [taskLatlng]);
+
+    return null;
+  };
 
   // dummy latlng is [0,0]
   useEffect(() => {
@@ -46,6 +59,8 @@ const TaskEditor = (props) => {
   if (props.latlng) {
     return (
       <div className={classes.TaskEditor}>
+        <h1 className={classes.header}>Create Task</h1>
+
         <div className={classes.latlng}>
           <div className={classes.position}>
             {taskLatlng ? taskLatlng.lat : "dummy"}
@@ -53,6 +68,22 @@ const TaskEditor = (props) => {
           <div className={classes.position}>
             {taskLatlng ? taskLatlng.lng : "dummy"}
           </div>
+        </div>
+
+        <div className={classes.miniMapWrapper}>
+          <MapContainer
+            className={classes.miniMap}
+            center={taskLatlng}
+            zoom={17}
+            tap={false}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
+            />
+            <MapScript />
+            <Marker />
+          </MapContainer>
         </div>
 
         <form className={classes.form}>
@@ -86,7 +117,7 @@ const TaskEditor = (props) => {
       </div>
     );
   } else {
-    return null;
+    return <h3>Error: task editor received no location data</h3>;
   }
 };
 

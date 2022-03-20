@@ -28,6 +28,11 @@ body {
   border-radius: 3px;
 }
 
+:global(h1) {
+  font-size: 24px;
+  margin: 0;
+}
+
 :global(.tooltip) {
   transition: 0.1s all ease;
   animation: fadeIn 0.3s forwards ease;
