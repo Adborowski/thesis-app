@@ -8,7 +8,6 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import TaskEditor from "./components/TaskEditor/TaskEditor";
 
 function App() {
-  console.log("Data: ", dummyData);
   const navigate = useNavigate();
 
   const handleEditorRedirect = useCallback(

@@ -23,15 +23,12 @@ const MapWrapper = (props) => {
 
   // Make a request for a user with a given ID
   useEffect(() => {
-    console.log(getLocalData());
     if (getLocalData()) {
       setMarkerData(getLocalData());
     }
-    console.log("markerData state", markerData);
     axios
       .get("https://tiszuk.com/tasks")
       .then(function (response) {
-        console.log("axios data:", response);
         setMarkerData(response.data);
       })
       .catch(function (error) {
@@ -55,7 +52,6 @@ const MapWrapper = (props) => {
   // such scripts must be run from a child of MapContainer
   const MapInsert = () => {
     // ^ must be returned as a child of MapContainer
-    console.log("Map scripts running...");
     const map = useMap();
     map.invalidateSize();
 
@@ -111,7 +107,6 @@ const MapWrapper = (props) => {
 
     useMapEvents({
       click: (e) => {
-        const clickLocation = e.latlng;
         console.log(e.latlng);
         console.log("Layers:", map._layers);
         createEditorPopup(e.latlng);

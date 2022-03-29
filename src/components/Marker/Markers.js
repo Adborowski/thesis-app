@@ -1,42 +1,15 @@
-import { useMap, Marker } from "react-leaflet";
-import { useState, useEffect } from "react";
+import { useMap } from "react-leaflet";
+import { useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import ReactDOMServer from "react-dom/server";
 import classes from "./Marker.module.css";
-import dummyData from "../../db.json";
 import Icon from "../Icons/Icon";
 
 const Markers = (props) => {
-  // localStorage.setItem("taskData", false);
   const map = useMap();
 
-  const getLocalData = () => {
-    if (localStorage.getItem("taskData")) {
-      const localData = JSON.parse(localStorage.getItem("taskData"));
-      return localData;
-    } else {
-      return false;
-    }
-  };
-
-  const [taskData, setTaskData] = useState(dummyData);
-
-  useEffect(() => {
-    console.log("new props", props.taskData);
-
-    if (getLocalData()) {
-      // get localStorage data if available
-      setTaskData(getLocalData());
-    }
-
-    if (getLocalData() != props.taskData) {
-      // only update if local data different
-      setTaskData(props.taskData);
-      const newLocalData = JSON.stringify(props.taskData);
-      localStorage.setItem("taskData", newLocalData);
-    }
-  }, [props]);
+  const [taskData, setTaskData] = useState(props.taskData);
 
   const setPopupEvents = (e) => {
     // only for existing tasks, not the task editor
