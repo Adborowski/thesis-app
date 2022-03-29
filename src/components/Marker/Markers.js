@@ -11,7 +11,7 @@ const Markers = (props) => {
   console.log("LOCALSTORAGE:", localStorage.getItem("taskData"));
   const map = useMap();
 
-  const [taskData, setTaskData] = useState(props.db);
+  const [taskData, setTaskData] = useState(dummyData);
 
   if (localStorage.getItem("taskData")) {
     // setTaskData(localStorage.getItem("taskData"));
@@ -57,7 +57,7 @@ const Markers = (props) => {
 
     if (Object.keys(map._layers).length < 2) {
       console.log(localStorage);
-      props.db.forEach((task) => {
+      taskData.forEach((task) => {
         const newMarker = L.marker(task.latlng, { icon: Icon() });
         newMarker.type = "taskMarker";
         const popupContent = (

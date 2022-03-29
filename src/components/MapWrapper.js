@@ -127,7 +127,7 @@ const MapWrapper = (props) => {
         tap={false}
       >
         <MapInsert />
-        <Markers db={markerData} />
+        <Markers taskData={markerData} />
       </MapContainer>
     </div>
   );
