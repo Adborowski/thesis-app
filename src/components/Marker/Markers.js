@@ -13,6 +13,13 @@ const Markers = (props) => {
 
   const [taskData, setTaskData] = useState(dummyData);
 
+  useEffect(() => {
+    console.log("new props", props.taskData);
+    if (props.taskData != dummyData) {
+      setTaskData(props.taskData);
+    }
+  }, [props]);
+
   if (localStorage.getItem("taskData")) {
     // setTaskData(localStorage.getItem("taskData"));
   }
