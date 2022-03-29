@@ -1,5 +1,5 @@
 import { useMap } from "react-leaflet";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import ReactDOMServer from "react-dom/server";
@@ -9,7 +9,16 @@ import Icon from "../Icons/Icon";
 const Markers = (props) => {
   const map = useMap();
 
+  console.log(props);
+
   const [taskData, setTaskData] = useState(props.taskData);
+
+  useEffect(() => {
+    console.log(props);
+    if (taskData != props.taskData) {
+      setTaskData(props.taskData);
+    }
+  }, [props]);
 
   const setPopupEvents = (e) => {
     // only for existing tasks, not the task editor

@@ -10,6 +10,7 @@ import dummyData from "../db.json";
 import EditorIcon from "./Icons/EditorIcon";
 
 const MapWrapper = (props) => {
+
   const getLocalData = () => {
     if (localStorage.getItem("taskData")) {
       const localData = JSON.parse(localStorage.getItem("taskData"));
@@ -21,11 +22,13 @@ const MapWrapper = (props) => {
 
   const [markerData, setMarkerData] = useState(dummyData);
 
-  // Make a request for a user with a given ID
   useEffect(() => {
+
     if (getLocalData()) {
       setMarkerData(getLocalData());
+      console.log(markerData);
     }
+
     axios
       .get("https://tiszuk.com/tasks")
       .then(function (response) {

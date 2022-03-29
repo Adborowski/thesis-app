@@ -97,15 +97,6 @@ const TaskEditor = (props) => {
     };
 
     axios
-      .post("http://tiszuk.com/upload-media", newTaskFormData, config)
-      .then((response) => {
-        alert("The file is successfully uploaded");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    axios
       .post("https://tiszuk.com/create-task", newTaskData)
       .then((res) => {
         console.log(res.data);
