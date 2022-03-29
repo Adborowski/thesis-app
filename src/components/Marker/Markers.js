@@ -8,10 +8,22 @@ import dummyData from "../../db.json";
 import Icon from "../Icons/Icon";
 
 const Markers = (props) => {
+  const map = useMap();
+
+  const setPopupEvents = () => {
+    console.log("Setting popup events...");
+    const btnClose = document.getElementById("btnClose");
+    btnClose.addEventListener("click", () => {
+      map.closePopup();
+    });
+    console.log(btnClose);
+  };
   const taskData = props.db;
   console.log("TASKDATA AT MARKERS:", taskData);
 
-  const map = useMap();
+  map.on("popupopen", function (e) {
+    setPopupEvents();
+  });
 
   const refreshMarkers = () => {
     map.eachLayer(function (layer) {
@@ -52,8 +64,13 @@ const Markers = (props) => {
             </div>
 
             <div className={classes.controls}>
-              <div className={classes.button}>SOLVE</div>
-              <div className={`${classes.button} ${classes.btnClose}`}>
+              <div id={"btnSolve"} className={classes.button}>
+                SOLVE
+              </div>
+              <div
+                id={"btnClose"}
+                className={`${classes.button} ${classes.btnClose}`}
+              >
                 CLOSE
               </div>
             </div>
