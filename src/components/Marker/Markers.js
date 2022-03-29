@@ -25,6 +25,7 @@ const Markers = (props) => {
     if (e.target._popup._source.type === "taskMarker") {
       const btnClose = document.getElementById("btnClose");
       const btnSolve = document.getElementById("btnSolve");
+      const btnDelete = document.getElementById("btnDelete");
 
       btnClose.addEventListener("click", () => {
         map.closePopup();
@@ -33,12 +34,16 @@ const Markers = (props) => {
       btnSolve.addEventListener("click", () => {
         console.log("Solving task...");
       });
+
+      btnDelete.addEventListener("click", (e) => {
+        const markerIdToDelete = parseInt(e.target.dataset.markerid);
+        console.log(markerIdToDelete);
+      });
     }
   };
 
   map.on("popupopen", function (e) {
     console.log(e.target._popup._source);
-    console.log(e.target._popup._source.type);
     setPopupEvents(e);
   });
 
@@ -89,6 +94,14 @@ const Markers = (props) => {
                 className={`${classes.button} ${classes.btnClose}`}
               >
                 CLOSE
+              </div>
+
+              <div
+                id={"btnDelete"}
+                className={`${classes.button} ${classes.btnDelete}`}
+                data-markerid={task.id}
+              >
+                DELETE
               </div>
             </div>
           </div>
