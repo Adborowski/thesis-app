@@ -8,9 +8,22 @@ import dummyData from "../../db.json";
 import Icon from "../Icons/Icon";
 
 const Markers = (props) => {
+  console.log("LOCALSTORAGE:", localStorage.getItem("taskData"));
   const map = useMap();
-  const taskData = props.db;
+
+  const [taskData, setTaskData] = useState(props.db);
+
+  if (localStorage.getItem("taskData")) {
+    // setTaskData(localStorage.getItem("taskData"));
+  }
+
   console.log("TASKDATA AT MARKERS:", taskData);
+
+  if (taskData.length > 2) {
+    // there is always 2 dummies
+    localStorage.setItem("taskData", taskData);
+    console.log("Saved to localstorage:", taskData);
+  }
 
   const setPopupEvents = (e) => {
     // only for existing tasks, not the task editor
@@ -43,8 +56,8 @@ const Markers = (props) => {
     });
 
     if (Object.keys(map._layers).length < 2) {
-      taskData.forEach((task) => {
-        console.log("LOADING TASK:", task.latlng);
+      console.log(localStorage);
+      props.db.forEach((task) => {
         const newMarker = L.marker(task.latlng, { icon: Icon() });
         newMarker.type = "taskMarker";
         const popupContent = (
