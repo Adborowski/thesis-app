@@ -70,6 +70,10 @@ const TaskEditor = (props) => {
     setTaskDescription(e.target.value);
   };
 
+  const handleMediaChange = (e) => {
+    console.log(e);
+  };
+
   const handleTaskSubmit = (e) => {
     const newTaskData = {
       id: taskId,
@@ -141,6 +145,13 @@ const TaskEditor = (props) => {
             id="taskDescription"
             placeholder={"task description"}
           ></input>
+
+          <input
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            name="photo"
+            onChange={handleMediaChange}
+          />
 
           <div
             onClick={handleTaskSubmit}
