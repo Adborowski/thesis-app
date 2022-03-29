@@ -12,10 +12,10 @@ const TaskEditor = (props) => {
   const [taskReward, setTaskReward] = useState();
   const [taskLatlng, setTaskLatlng] = useState([0, 0]);
   const [taskId, setTaskId] = useState();
+  const [taskMedia, setTaskMedia] = useState();
 
   // figure out which Id is next in the database
   const getNewTaskId = () => {
-    let taskId;
     axios
       .get("https://tiszuk.com/tasks")
       .then(function (response) {
@@ -71,7 +71,8 @@ const TaskEditor = (props) => {
   };
 
   const handleMediaChange = (e) => {
-    console.log(e);
+    console.log(e.target.files[0]);
+    setTaskMedia(e.target.files[0]);
   };
 
   const handleTaskSubmit = (e) => {
@@ -85,6 +86,23 @@ const TaskEditor = (props) => {
       latlng: [props.latlng.lat, props.latlng.lng],
     };
     console.log("Creating new task...", newTaskData);
+
+    const newTaskFormData = new FormData();
+    newTaskFormData.append("myFile", taskMedia);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+
+    axios
+      .post("http://tiszuk.com/upload-media", newTaskFormData, config)
+      .then((response) => {
+        alert("The file is successfully uploaded");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     axios
       .post("https://tiszuk.com/create-task", newTaskData)
@@ -153,12 +171,15 @@ const TaskEditor = (props) => {
             onChange={handleMediaChange}
           />
 
-          <div
-            onClick={handleTaskSubmit}
-            id="btnCreateTask"
-            className={"button"}
-          >
-            Create
+          <div className={classes.buttons}>
+            <div
+              onClick={handleTaskSubmit}
+              id="btnCreateTask"
+              className={"button"}
+            >
+              Create
+            </div>
+            <div className={`${classes.btnCancel} button`}>Cancel</div>
           </div>
         </form>
       </div>

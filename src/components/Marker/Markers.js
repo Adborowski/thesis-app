@@ -53,6 +53,9 @@ const Markers = (props) => {
 
             <div className={classes.controls}>
               <div className={classes.button}>SOLVE</div>
+              <div className={`${classes.button} ${classes.btnClose}`}>
+                CLOSE
+              </div>
             </div>
           </div>
         );

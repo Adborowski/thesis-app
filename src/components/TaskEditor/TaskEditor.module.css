@@ -37,3 +37,13 @@
   color: lightgray;
   margin-bottom: 12px;
 }
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 6px;
+}
+
+.btnCancel {
+  background-color: var(--color-3);
+}
