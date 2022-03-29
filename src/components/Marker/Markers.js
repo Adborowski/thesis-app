@@ -9,20 +9,28 @@ import Icon from "../Icons/Icon";
 
 const Markers = (props) => {
   const map = useMap();
-
-  const setPopupEvents = () => {
-    console.log("Setting popup events...");
-    const btnClose = document.getElementById("btnClose");
-    btnClose.addEventListener("click", () => {
-      map.closePopup();
-    });
-    console.log(btnClose);
-  };
   const taskData = props.db;
   console.log("TASKDATA AT MARKERS:", taskData);
 
+  const setPopupEvents = (e) => {
+    if (e.target._popup._source.type === "taskMarker") {
+      const btnClose = document.getElementById("btnClose");
+      const btnSolve = document.getElementById("btnSolve");
+
+      btnClose.addEventListener("click", () => {
+        map.closePopup();
+      });
+
+      btnSolve.addEventListener("click", () => {
+        console.log("Solving task...");
+      });
+    }
+  };
+
   map.on("popupopen", function (e) {
-    setPopupEvents();
+    console.log(e.target._popup._source);
+    console.log(e.target._popup._source.type);
+    setPopupEvents(e);
   });
 
   const refreshMarkers = () => {
@@ -67,6 +75,7 @@ const Markers = (props) => {
               <div id={"btnSolve"} className={classes.button}>
                 SOLVE
               </div>
+
               <div
                 id={"btnClose"}
                 className={`${classes.button} ${classes.btnClose}`}
