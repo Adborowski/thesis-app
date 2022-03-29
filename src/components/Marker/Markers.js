@@ -8,29 +8,35 @@ import dummyData from "../../db.json";
 import Icon from "../Icons/Icon";
 
 const Markers = (props) => {
-  console.log("LOCALSTORAGE:", localStorage.getItem("taskData"));
+  // localStorage.setItem("taskData", false);
   const map = useMap();
+
+  const getLocalData = () => {
+    if (localStorage.getItem("taskData")) {
+      const localData = JSON.parse(localStorage.getItem("taskData"));
+      return localData;
+    } else {
+      return false;
+    }
+  };
 
   const [taskData, setTaskData] = useState(dummyData);
 
   useEffect(() => {
     console.log("new props", props.taskData);
-    if (props.taskData != dummyData) {
+
+    if (getLocalData()) {
+      // get localStorage data if available
+      setTaskData(getLocalData());
+    }
+
+    if (getLocalData() != props.taskData) {
+      // only update if local data different
       setTaskData(props.taskData);
+      const newLocalData = JSON.stringify(props.taskData);
+      localStorage.setItem("taskData", newLocalData);
     }
   }, [props]);
-
-  if (localStorage.getItem("taskData")) {
-    // setTaskData(localStorage.getItem("taskData"));
-  }
-
-  console.log("TASKDATA AT MARKERS:", taskData);
-
-  if (taskData.length > 2) {
-    // there is always 2 dummies
-    localStorage.setItem("taskData", taskData);
-    console.log("Saved to localstorage:", taskData);
-  }
 
   const setPopupEvents = (e) => {
     // only for existing tasks, not the task editor
@@ -63,7 +69,6 @@ const Markers = (props) => {
     });
 
     if (Object.keys(map._layers).length < 2) {
-      console.log(localStorage);
       taskData.forEach((task) => {
         const newMarker = L.marker(task.latlng, { icon: Icon() });
         newMarker.type = "taskMarker";
