@@ -13,6 +13,7 @@ const Markers = (props) => {
   console.log("TASKDATA AT MARKERS:", taskData);
 
   const setPopupEvents = (e) => {
+    // only for existing tasks, not the task editor
     if (e.target._popup._source.type === "taskMarker") {
       const btnClose = document.getElementById("btnClose");
       const btnSolve = document.getElementById("btnSolve");

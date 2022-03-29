@@ -16,12 +16,23 @@ function App() {
     [navigate]
   );
 
+  const handleEditorClose = useCallback(
+    () => navigate("/", { replace: true }),
+    [navigate]
+  );
+
   const [newTaskLocation, setNewTaskLocation] = useState();
 
   const openTaskModal = (latlng) => {
     console.log("APP.JS OPEN TASK MODAL:", latlng);
     setNewTaskLocation(latlng);
     handleEditorRedirect();
+  };
+
+  const closeTaskModal = () => {
+    console.log("CLOSING TASK MODAL");
+    setNewTaskLocation();
+    handleEditorClose();
   };
 
   // prettier-ignore
@@ -37,7 +48,7 @@ function App() {
         />
         <Route
         path="/editor"
-        element={<TaskEditor latlng={newTaskLocation}/>}
+        element={<TaskEditor closeTaskModal={closeTaskModal} latlng={newTaskLocation}/>}
       />
       </Routes>
     </div>

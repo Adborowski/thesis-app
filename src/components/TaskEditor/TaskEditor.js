@@ -15,6 +15,7 @@ const TaskEditor = (props) => {
   const [taskMedia, setTaskMedia] = useState();
 
   // figure out which Id is next in the database
+
   const getNewTaskId = () => {
     axios
       .get("https://tiszuk.com/tasks")
@@ -179,7 +180,12 @@ const TaskEditor = (props) => {
             >
               Create
             </div>
-            <div className={`${classes.btnCancel} button`}>Cancel</div>
+            <div
+              onClick={props.closeTaskModal}
+              className={`${classes.btnCancel} button`}
+            >
+              Cancel
+            </div>
           </div>
         </form>
       </div>
