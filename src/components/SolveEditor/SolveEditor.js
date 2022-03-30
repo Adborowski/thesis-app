@@ -5,43 +5,25 @@ import { MapContainer, TileLayer, useMap, Marker } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Icon from "../Icons/Icon";
+import Minimap from "../Minimap/Minimap";
 
 const SolveEditor = (props) => {
   const [taskToSolve, setTaskToSolve] = useState(props.task);
-  const MapScript = () => {
-    const map = useMap();
+  console.log(props);
 
-    useEffect(() => {
-      console.log("new taskLatLng", props.task.latlng);
-      map.panTo(props.task.latlng);
-    }, [props]);
-
-    return null;
-  };
   useEffect(() => {
-    console.log(props);
+    if (props.task) {
+      setTaskToSolve(props.task);
+      console.log(props);
+    }
   }, [props]);
-  if (props.task) {
+
+  if (taskToSolve) {
     return (
       <div className={classes.SolveEditor}>
         <Nav />
         <h1 className={classes.header}>Solve Task</h1>
-
-        <div className={classes.miniMapWrapper}>
-          <MapContainer
-            className={classes.miniMap}
-            center={props.task.latlng}
-            zoom={17}
-            tap={false}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
-            />
-            <MapScript />
-            <Marker icon={Icon()} position={props.task.latlng} />
-          </MapContainer>
-        </div>
+        <Minimap taskLatlng={taskToSolve.latlng} icon={Icon} />
 
         <div className={classes.controls}></div>
       </div>

@@ -1,0 +1,8 @@
+.miniMapWrapper {
+  margin-bottom: 12px;
+}
+
+.miniMap {
+  height: 200px;
+  width: 100%;
+}

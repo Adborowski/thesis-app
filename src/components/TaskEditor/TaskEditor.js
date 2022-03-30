@@ -5,6 +5,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import EditorIcon from "../Icons/EditorIcon";
 import axios from "axios";
+import Minimap from "../Minimap/Minimap";
 
 const TaskEditor = (props) => {
   const [taskTitle, setTaskTitle] = useState();
@@ -13,6 +14,13 @@ const TaskEditor = (props) => {
   const [taskLatlng, setTaskLatlng] = useState([0, 0]);
   const [taskId, setTaskId] = useState();
   const [taskMedia, setTaskMedia] = useState();
+
+  // Minimap takes a whole task so let's make a dummy
+  const [fakeTask, setFakeTask] = useState({ latlng: [0, 0] });
+
+  useEffect(() => {
+    setFakeTask({ latlng: taskLatlng });
+  }, [taskLatlng]);
 
   // figure out which Id is next in the database
 
@@ -123,21 +131,7 @@ const TaskEditor = (props) => {
           </div>
         </div>
 
-        <div className={classes.miniMapWrapper}>
-          <MapContainer
-            className={classes.miniMap}
-            center={taskLatlng}
-            zoom={17}
-            tap={false}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=4a75cf0a5d344e36bb1ebac1821b42e2"
-            />
-            <MapScript />
-            <Marker icon={EditorIcon()} position={taskLatlng} />
-          </MapContainer>
-        </div>
+        <Minimap taskLatlng={taskLatlng} icon={EditorIcon} />
 
         <form className={classes.form}>
           <input
