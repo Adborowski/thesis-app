@@ -33,6 +33,7 @@ const Markers = (props) => {
 
       btnSolve.addEventListener("click", () => {
         console.log("Solving task...");
+        props.handleSolverRedirect();
       });
 
       btnDelete.addEventListener("click", (e) => {

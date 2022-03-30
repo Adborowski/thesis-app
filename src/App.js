@@ -4,6 +4,7 @@ import dummyData from "./db.json"; // local file-based db
 import { useState, useCallback } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import TaskEditor from "./components/TaskEditor/TaskEditor";
+import SolveEditor from "./components/SolveEditor/SolveEditor";
 
 function App() {
   const navigate = useNavigate();
@@ -18,6 +19,12 @@ function App() {
     [navigate]
   );
 
+  const handleSolverRedirect = useCallback(
+    () => navigate("/solver", { replace: true }),
+    [navigate]
+  );
+
+  // decides whether TaskEditor is visible
   const [newTaskLocation, setNewTaskLocation] = useState();
 
   const openTaskModal = (latlng) => {
@@ -32,6 +39,10 @@ function App() {
     handleEditorClose();
   };
 
+  const openTaskSolver = () => {
+    handleSolverRedirect();
+  };
+
   // prettier-ignore
   return (
     <div className={classes.main}>
@@ -39,14 +50,24 @@ function App() {
         <div className={classes.title}>thesis-app</div>
       </div>
       <Routes>
+
         <Route
           path="/"
-          element={<MapWrapper openTaskModal={openTaskModal} data={dummyData}></MapWrapper>}
+          element={<MapWrapper 
+            handleSolverRedirect={handleSolverRedirect} openTaskModal={openTaskModal} 
+            data={dummyData}></MapWrapper>}
         />
+
         <Route
-        path="/editor"
-        element={<TaskEditor closeTaskModal={closeTaskModal} latlng={newTaskLocation}/>}
-      />
+          path="/editor"
+          element={<TaskEditor closeTaskModal={closeTaskModal} latlng={newTaskLocation}/>}
+        />
+
+        <Route
+          path="/solver"
+          element={<SolveEditor/>}
+        />
+
       </Routes>
     </div>
   );

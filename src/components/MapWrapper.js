@@ -10,7 +10,6 @@ import dummyData from "../db.json";
 import EditorIcon from "./Icons/EditorIcon";
 
 const MapWrapper = (props) => {
-
   const getLocalData = () => {
     if (localStorage.getItem("taskData")) {
       const localData = JSON.parse(localStorage.getItem("taskData"));
@@ -23,7 +22,6 @@ const MapWrapper = (props) => {
   const [markerData, setMarkerData] = useState(dummyData);
 
   useEffect(() => {
-
     if (getLocalData()) {
       setMarkerData(getLocalData());
       console.log(markerData);
@@ -138,7 +136,10 @@ const MapWrapper = (props) => {
         tap={false}
       >
         <MapInsert />
-        <Markers taskData={markerData} />
+        <Markers
+          taskData={markerData}
+          handleSolverRedirect={props.handleSolverRedirect}
+        />
       </MapContainer>
     </div>
   );
