@@ -31,8 +31,9 @@ const Markers = (props) => {
         map.closePopup();
       });
 
-      btnSolve.addEventListener("click", () => {
-        console.log("Solving task...");
+      btnSolve.addEventListener("click", (e) => {
+        const taskToSolve = parseInt(e.target.dataset.markerid);
+        console.log(taskToSolve);
         props.openTaskSolver();
       });
 
@@ -86,7 +87,11 @@ const Markers = (props) => {
             </div>
 
             <div className={classes.controls}>
-              <div id={"btnSolve"} className={classes.button}>
+              <div
+                id={"btnSolve"}
+                className={classes.button}
+                data-markerid={task.id}
+              >
                 SOLVE
               </div>
 

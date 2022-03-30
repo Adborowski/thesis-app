@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import TaskEditor from "./components/TaskEditor/TaskEditor";
 import SolveEditor from "./components/SolveEditor/SolveEditor";
+import Nav from "./components/Nav/Nav";
 import dummyData from "./db.json";
 import axios from "axios";
 
@@ -52,7 +53,6 @@ function App() {
     [navigate]
   );
 
-  // decides whether TaskEditor is visible
   const [newTaskLocation, setNewTaskLocation] = useState();
   const [solverTask, setSolverTask] = useState();
 
@@ -71,14 +71,13 @@ function App() {
   const openTaskSolver = (taskId) => {
     handleSolverRedirect();
     console.log("solvin");
+    // axios call here for specific id
   };
 
   // prettier-ignore
   return (
     <div className={classes.main}>
-      <div className={classes.desktopMenu}>
-        <div className={classes.title}>thesis-app</div>
-      </div>
+    <Nav/>
       <Routes>
 
         <Route

@@ -1,0 +1,17 @@
+.Nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 6px;
+}
+
+.btnBackToMap {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  border-radius: 200px;
+  height: 20px;
+  width: 20px;
+  display: block;
+  text-decoration: none;
+}
