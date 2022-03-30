@@ -1,11 +1,11 @@
 .Nav {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 12px;
+  left: 12px;
 }
 
 .btnBackToMap {
-  background-color: white;
+  background-color: transparent;
   border: 1px solid black;
   color: black;
   border-radius: 200px;

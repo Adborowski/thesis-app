@@ -7,11 +7,57 @@
   border-radius: 6px;
   min-width: 250px;
   margin-top: 12px;
+  position: relative;
 }
 
 .header {
   text-align: center;
   margin-bottom: 12px;
+}
+
+.latlng {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  font-size: 10px;
+  text-align: center;
+  color: lightgray;
+  margin-bottom: 12px;
+}
+
+.taskInfo {
+  /* border: 1px solid lime; */
+  display: grid;
+  grid-template-rows: auto;
+  grid-gap: 12px;
+}
+
+.infoItem {
+  /* border: 1px solid red; */
+}
+
+.taskMedia {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* border: 1px solid lime; */
+}
+
+.mediaItem {
+  min-height: 150px;
+  /* border: 1px solid red; */
+  background-size: cover;
+}
+
+.mediaItem img {
+  max-width: 100%;
+}
+
+.label {
+  font-size: 0.75rem;
+}
+
+.content {
+  font-size: 1.25rem;
 }
 
 .controls {
