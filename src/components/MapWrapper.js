@@ -10,33 +10,6 @@ import dummyData from "../db.json";
 import EditorIcon from "./Icons/EditorIcon";
 
 const MapWrapper = (props) => {
-  const getLocalData = () => {
-    if (localStorage.getItem("taskData")) {
-      const localData = JSON.parse(localStorage.getItem("taskData"));
-      return localData;
-    } else {
-      return false;
-    }
-  };
-
-  const [markerData, setMarkerData] = useState(dummyData);
-
-  useEffect(() => {
-    if (getLocalData()) {
-      setMarkerData(getLocalData());
-      console.log(markerData);
-    }
-
-    axios
-      .get("https://tiszuk.com/tasks")
-      .then(function (response) {
-        setMarkerData(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
-
   const specialClass = ""; // mapWrapper gets specialClass when it enters Task View
 
   // prettier-ignore
@@ -136,7 +109,10 @@ const MapWrapper = (props) => {
         tap={false}
       >
         <MapInsert />
-        <Markers taskData={markerData} openTaskSolver={props.openTaskSolver} />
+        <Markers
+          taskData={props.taskData}
+          openTaskSolver={props.openTaskSolver}
+        />
       </MapContainer>
     </div>
   );
