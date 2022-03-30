@@ -32,9 +32,8 @@ const Markers = (props) => {
       });
 
       btnSolve.addEventListener("click", (e) => {
-        const taskToSolve = parseInt(e.target.dataset.markerid);
-        console.log(taskToSolve);
-        props.openTaskSolver();
+        const taskId = parseInt(e.target.dataset.markerid);
+        props.openTaskSolver(taskId);
       });
 
       btnDelete.addEventListener("click", (e) => {

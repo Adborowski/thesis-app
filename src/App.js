@@ -70,14 +70,14 @@ function App() {
 
   const openTaskSolver = (taskId) => {
     handleSolverRedirect();
-    console.log("solvin");
-    // axios call here for specific id
+    console.log("solvin", taskId);
+    const taskToSolve = taskData.find((task) => task.id === taskId);
+    setSolverTask(taskToSolve);
   };
 
   // prettier-ignore
   return (
     <div className={classes.main}>
-    <Nav/>
       <Routes>
 
         <Route
@@ -96,7 +96,7 @@ function App() {
 
         <Route
           path="/solver"
-          element={<SolveEditor/>}
+          element={<SolveEditor task={solverTask}/>}
         />
 
       </Routes>
