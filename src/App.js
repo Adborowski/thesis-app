@@ -1,9 +1,7 @@
-import classes from "./app.module.css";
+import classes from "./App.module.css";
 import MapWrapper from "./components/MapWrapper";
 import dummyData from "./db.json"; // local file-based db
 import { useState, useCallback } from "react";
-import { useMap } from "react-leaflet";
-import TaskModal from "./components/TaskModal/TaskModal";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import TaskEditor from "./components/TaskEditor/TaskEditor";
 

@@ -100,6 +100,9 @@ const TaskEditor = (props) => {
       .post("https://tiszuk.com/create-task", newTaskData)
       .then((res) => {
         console.log(res.data);
+        if (res.data) {
+          props.closeTaskModal();
+        }
       })
       .catch((error) => {
         console.log(error);

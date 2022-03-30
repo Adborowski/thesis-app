@@ -19,6 +19,10 @@ body {
 .main {
 }
 
+:global(.taskIcon) {
+  animation: fadeIn 1.5s;
+}
+
 .desktopMenu {
   background-color: white;
   position: fixed;
