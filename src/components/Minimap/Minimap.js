@@ -17,6 +17,12 @@ const Minimap = (props) => {
 
   const MapScript = () => {
     const map = useMap();
+
+    useEffect(() => {
+      if (props.taskLatlng) {
+        map.panTo(props.taskLatlng);
+      }
+    }, [props]);
     return null;
   };
 
