@@ -22,20 +22,21 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    if (getLocalData()) {
-      setTaskData(getLocalData());
-      console.log(taskData);
-    }
-
+  const fetchTaskData = () => {
+    console.log("fetching task data...");
     axios
       .get("https://tiszuk.com/tasks")
       .then(function (response) {
         setTaskData(response.data);
+        console.log("fetched task data", taskData);
       })
       .catch(function (error) {
         console.log(error);
       });
+  };
+
+  useEffect(() => {
+    fetchTaskData();
   }, []);
 
   const handleEditorRedirect = useCallback(
@@ -86,12 +87,16 @@ function App() {
             openTaskSolver={openTaskSolver} 
             openTaskModal={openTaskModal} 
             taskData={taskData}
+            
             ></MapWrapper>}
         />
 
         <Route
           path="/editor"
-          element={<TaskEditor closeTaskModal={closeTaskModal} latlng={newTaskLocation}/>}
+          element={<TaskEditor 
+            closeTaskModal={closeTaskModal} 
+            fetchTaskData={fetchTaskData} 
+            latlng={newTaskLocation}/>}
         />
 
         <Route

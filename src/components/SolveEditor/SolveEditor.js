@@ -60,6 +60,7 @@ const SolveEditor = (props) => {
             ></div>
           ))}
         </div>
+        <h1 className={classes.header}>Submit Solution</h1>
 
         <div className={classes.controls}></div>
       </div>

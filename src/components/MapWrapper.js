@@ -4,10 +4,8 @@ import ReactDOMServer from "react-dom/server";
 import "leaflet/dist/leaflet.css";
 import Markers from "./Marker/Markers";
 import L from "leaflet";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import dummyData from "../db.json";
 import EditorIcon from "./Icons/EditorIcon";
+import { useState, useEffect } from "react";
 
 const MapWrapper = (props) => {
   const specialClass = ""; // mapWrapper gets specialClass when it enters Task View

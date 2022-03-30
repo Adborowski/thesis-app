@@ -110,6 +110,7 @@ const TaskEditor = (props) => {
         console.log(res.data);
         if (res.data) {
           props.closeTaskModal();
+          props.fetchTaskData();
         }
       })
       .catch((error) => {
