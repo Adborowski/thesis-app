@@ -1,4 +1,4 @@
-import classes from "./map.module.css";
+import classes from "./MapWrapper.module.css";
 import { MapContainer, useMapEvents, useMap } from "react-leaflet";
 import ReactDOMServer from "react-dom/server";
 import "leaflet/dist/leaflet.css";
@@ -31,7 +31,11 @@ const MapWrapper = (props) => {
       const newMarker = L.marker(latlng, { icon: EditorIcon() });
       newMarker.type = "editorMarker";
       newMarker
-        .bindPopup(ReactDOMServer.renderToStaticMarkup(<EditorPopupPanel />))
+        .bindPopup(
+          ReactDOMServer.renderToStaticMarkup(
+            <EditorPopupPanel className={"editorPopup"} />
+          )
+        )
         .addTo(map)
         .openPopup();
       const btnOpenEditor = document.getElementById("btnOpenEditor");

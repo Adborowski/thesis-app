@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import EditorIcon from "../Icons/EditorIcon";
 import axios from "axios";
 import Minimap from "../Minimap/Minimap";
+import Nav from "../Nav/Nav";
 
 const TaskEditor = (props) => {
   const [taskTitle, setTaskTitle] = useState();
@@ -121,6 +122,7 @@ const TaskEditor = (props) => {
   if (props.latlng) {
     return (
       <div className={classes.TaskEditor}>
+        <Nav />
         <h1 className={classes.header}>Create Task</h1>
 
         <div className={classes.latlng}>

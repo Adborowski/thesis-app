@@ -72,15 +72,12 @@ const Markers = (props) => {
 
             <div className={classes.infoItems}>
               <div className={classes.infoItem}>
-                <div className={classes.label}>Title</div>
+                <div className={"label"}>Title</div>
                 <div className={classes.content}>{task.title}</div>
               </div>
+
               <div className={classes.infoItem}>
-                <div className={classes.label}>Description</div>
-                <div className={classes.content}>{task.description}</div>
-              </div>
-              <div className={classes.infoItem}>
-                <div className={classes.label}>Reward</div>
+                <div className={"label"}>Reward</div>
                 <div className={classes.content}>{task.reward}</div>
               </div>
             </div>
