@@ -136,10 +136,7 @@ const MapWrapper = (props) => {
         tap={false}
       >
         <MapInsert />
-        <Markers
-          taskData={markerData}
-          handleSolverRedirect={props.handleSolverRedirect}
-        />
+        <Markers taskData={markerData} openTaskSolver={props.openTaskSolver} />
       </MapContainer>
     </div>
   );

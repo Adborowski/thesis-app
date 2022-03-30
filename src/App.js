@@ -1,6 +1,5 @@
 import classes from "./App.module.css";
 import MapWrapper from "./components/MapWrapper";
-import dummyData from "./db.json"; // local file-based db
 import { useState, useCallback } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import TaskEditor from "./components/TaskEditor/TaskEditor";
@@ -26,10 +25,11 @@ function App() {
 
   // decides whether TaskEditor is visible
   const [newTaskLocation, setNewTaskLocation] = useState();
+  const [solverTask, setSolverTask] = useState();
 
   const openTaskModal = (latlng) => {
     console.log("APP.JS OPEN TASK MODAL:", latlng);
-    setNewTaskLocation(latlng);
+    setNewTaskLocation(latlng); // this opens taskModal
     handleEditorRedirect();
   };
 
@@ -39,8 +39,9 @@ function App() {
     handleEditorClose();
   };
 
-  const openTaskSolver = () => {
+  const openTaskSolver = (taskId) => {
     handleSolverRedirect();
+    console.log("solvin");
   };
 
   // prettier-ignore
@@ -54,8 +55,9 @@ function App() {
         <Route
           path="/"
           element={<MapWrapper 
-            handleSolverRedirect={handleSolverRedirect} openTaskModal={openTaskModal} 
-            data={dummyData}></MapWrapper>}
+            openTaskSolver={openTaskSolver} 
+            openTaskModal={openTaskModal} 
+            ></MapWrapper>}
         />
 
         <Route
