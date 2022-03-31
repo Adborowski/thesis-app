@@ -35,8 +35,13 @@
   /* border: 1px solid red; */
 }
 
+.infoItem.reward {
+  text-align: center;
+  /* reward is inline-block */
+}
+
 .taskMedia {
-  margin-top: 18px;
+  margin: 18px 0px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   /* border: 1px solid lime; */
@@ -63,7 +68,11 @@
 }
 
 .controls {
-  max-width: 100px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 6px;
+  margin-top: 12px;
 }
 
 .miniMapWrapper {

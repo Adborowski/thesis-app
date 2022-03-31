@@ -36,20 +36,21 @@ const SolveEditor = (props) => {
         <Minimap taskLatlng={task.latlng} icon={Icon} />
 
         <div className={classes.taskInfo}>
+          <div className={`${classes.infoItem} ${classes.reward}`}>
+            {0 == 1 && <div className={"label"}>Reward</div>}
+            <div className={`${classes.content} taskReward`}>
+              ${task.reward}
+            </div>
+          </div>
           <div className={classes.infoItem}>
             {0 == 1 && <div className={"label"}>Title</div>}
             <div className={`${classes.content} taskTitle`}>{task.title}</div>
           </div>
+
           <div className={classes.infoItem}>
             {0 == 1 && <div className={"label"}>Description</div>}
             <div className={`${classes.content} taskDescription`}>
               {task.description}
-            </div>
-          </div>
-          <div className={classes.infoItem}>
-            {0 == 1 && <div className={"label"}>Reward</div>}
-            <div className={`${classes.content} taskReward`}>
-              ${task.reward}
             </div>
           </div>
         </div>
@@ -65,7 +66,10 @@ const SolveEditor = (props) => {
         </div>
         {0 == 1 && <h1 className={classes.header}>Submit Solution</h1>}
 
-        <div className={classes.controls}></div>
+        <div className={classes.controls}>
+          <button className={"button"}>Submit</button>
+          <button className={"button btnDelete"}>DELETE</button>
+        </div>
       </div>
     );
   } else {

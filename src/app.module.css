@@ -29,6 +29,14 @@ body {
   --color-3: #a52a2a;
 }
 
+button {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+  border: 0;
+}
+
 .main {
 }
 
@@ -60,12 +68,20 @@ body {
 :global(.button) {
   cursor: pointer;
   color: lime;
-  font-size: 18px;
-  background-color: var(--color-1);
-  color: white;
-  padding: 6px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  background-color: rgb(227, 227, 227);
+  /* border: 1px solid black; */
+  color: black;
+  padding: 6px 12px;
   border-radius: 6px;
   text-align: center;
+}
+
+:global(.btnDelete) {
+  /* color: crimson; */
+  /* border: 1px solid crimson; */
 }
 
 :global(.label) {
@@ -86,14 +102,15 @@ body {
 }
 
 :global(.taskReward) {
-  max-width: 60px;
+  /* max-width: 60px; */
   font-size: 1.5rem;
-  padding: 6px 12px;
+  padding: 6px 0px;
   background-color: var(--color-2);
   display: inline-block;
   /* margin-top: 3px; */
   border-radius: 6px;
   margin: auto;
+  width: 100%;
 }
 
 @keyframes fadeIn {

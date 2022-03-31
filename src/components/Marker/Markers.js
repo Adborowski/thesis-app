@@ -94,14 +94,6 @@ const Markers = (props) => {
               >
                 CLOSE
               </div>
-
-              <div
-                id={"btnDelete"}
-                className={`${classes.button} ${classes.btnDelete}`}
-                data-markerid={task.id}
-              >
-                DELETE
-              </div>
             </div>
           </div>
         );

@@ -9,12 +9,12 @@
 .controls {
   padding: 0px 12px 12px 12px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 6px;
 }
 
 .btnClose {
-  background-color: var(--color-3);
+  /* background-color: var(--color-3); */
 }
 
 .infoItem {

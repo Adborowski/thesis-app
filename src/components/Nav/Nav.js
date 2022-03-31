@@ -7,7 +7,7 @@ const Nav = () => {
 
   return (
     <div className={classes.Nav}>
-      <Link className={`button ${classes.btnBackToMap}`} to="/">
+      <Link className={`${classes.btnBackToMap}`} to="/">
         ←
       </Link>
     </div>
