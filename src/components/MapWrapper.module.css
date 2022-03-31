@@ -21,19 +21,11 @@
 }
 
 :global(a.leaflet-popup-close-button) {
-  /* border: 1px solid lime !important; */
   font-size: 2.5rem !important;
   margin: 0 !important;
   padding: 0 !important;
   top: 8px !important;
   right: 16px !important;
-  /* color: red !important; */
-  /* display: none; */
-}
-
-.leaflet-popup-close-button {
-  border: 1px solid lime;
-  color: red;
 }
 
 .icon {

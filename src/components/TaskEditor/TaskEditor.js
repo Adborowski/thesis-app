@@ -27,7 +27,7 @@ const TaskEditor = (props) => {
 
   const getNewTaskId = () => {
     axios
-      .get("https://tiszuk.com/tasks")
+      .get("http://localhost:81/tasks")
       .then(function (response) {
         const ids = response.data.map((task) => {
           return task.id;
@@ -86,6 +86,7 @@ const TaskEditor = (props) => {
   };
 
   const handleTaskSubmit = (e) => {
+    e.preventDefault();
     const newTaskData = {
       id: taskId,
       ownerId: 1,
@@ -97,26 +98,51 @@ const TaskEditor = (props) => {
     };
     console.log("Creating new task...", newTaskData);
 
+    // axios
+    //   .post("https://tiszuk.com/create-task", newTaskData)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     if (res.data) {
+    //       props.closeTaskModal();
+    //       props.fetchTaskData();
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
     const newTaskFormData = new FormData();
-    newTaskFormData.append("myFile", taskMedia);
+    newTaskFormData.append("uploadedFile", taskMedia);
     const config = {
       headers: {
         "content-type": "multipart/form-data",
       },
     };
 
+    for (var p of newTaskFormData) {
+      console.log(p);
+    }
+
     axios
-      .post("https://tiszuk.com/create-task", newTaskData)
+      .post("http://localhost:81/upload-media", newTaskFormData, config)
       .then((res) => {
-        console.log(res.data);
-        if (res.data) {
-          props.closeTaskModal();
-          props.fetchTaskData();
-        }
+        console.log(res);
       })
       .catch((error) => {
         console.log(error);
       });
+
+    // fetch("https://tiszuk.com/upload-media", {
+    //   method: "POST",
+    //   body: newTaskFormData,
+    // })
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     console.log("Success:", result);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
   };
 
   if (props.latlng) {
@@ -136,7 +162,12 @@ const TaskEditor = (props) => {
 
         <Minimap taskLatlng={taskLatlng} icon={EditorIcon} />
 
-        <form className={classes.form}>
+        <form
+          className={classes.form}
+          encType="multipart/form-data"
+          onSubmit={handleTaskSubmit}
+          id="form"
+        >
           <input
             onChange={handleTitleChange}
             id="taskTitle"
@@ -159,18 +190,14 @@ const TaskEditor = (props) => {
           <input
             type="file"
             accept=".png, .jpg, .jpeg"
-            name="photo"
+            name="uploadedFile"
             onChange={handleMediaChange}
           />
 
           <div className={classes.buttons}>
-            <div
-              onClick={handleTaskSubmit}
-              id="btnCreateTask"
-              className={"button"}
-            >
+            <button type="submit" id="btnCreateTask" className={"button"}>
               Create
-            </div>
+            </button>
             <div
               onClick={props.closeTaskModal}
               className={`${classes.btnCancel} button`}

@@ -23,12 +23,10 @@ function App() {
   };
 
   const fetchTaskData = () => {
-    console.log("fetching task data...");
     axios
-      .get("https://tiszuk.com/tasks")
+      .get("http://localhost:81/tasks")
       .then(function (response) {
         setTaskData(response.data);
-        console.log("fetched task data", taskData);
       })
       .catch(function (error) {
         console.log(error);

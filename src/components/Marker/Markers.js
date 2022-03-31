@@ -9,12 +9,9 @@ import Icon from "../Icons/Icon";
 const Markers = (props) => {
   const map = useMap();
 
-  console.log(props);
-
   const [taskData, setTaskData] = useState(props.taskData);
 
   useEffect(() => {
-    console.log(props);
     if (taskData != props.taskData) {
       setTaskData(props.taskData);
     }
