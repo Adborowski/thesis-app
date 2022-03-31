@@ -136,18 +136,6 @@ const TaskEditor = (props) => {
     for (var p of formData) {
       console.log(p);
     }
-
-    // fetch("https://tiszuk.com/upload-media", {
-    //   method: "POST",
-    //   body: newTaskFormData,
-    // })
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     console.log("Success:", result);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
   };
 
   if (props.latlng) {
