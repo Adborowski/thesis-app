@@ -37,7 +37,6 @@
 
 .taskMedia {
   margin-top: 18px;
-  margin-bottom: 18px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   /* border: 1px solid lime; */
@@ -47,6 +46,7 @@
   min-height: 150px;
   /* border: 1px solid red; */
   background-size: cover;
+  background-position: center;
 }
 
 .mediaItem img {

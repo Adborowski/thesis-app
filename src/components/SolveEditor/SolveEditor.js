@@ -47,12 +47,13 @@ const SolveEditor = (props) => {
             </div>
           </div>
           <div className={classes.infoItem}>
-            <div className={"label"}>Reward</div>
-            <div className={`${classes.content} taskReward`}>{task.reward}</div>
+            {0 == 1 && <div className={"label"}>Reward</div>}
+            <div className={`${classes.content} taskReward`}>
+              ${task.reward}
+            </div>
           </div>
         </div>
 
-        <h1 className={classes.header}>Task Media</h1>
         <div className={classes.taskMedia}>
           {task.media.map((item) => (
             <div
@@ -62,7 +63,7 @@ const SolveEditor = (props) => {
             ></div>
           ))}
         </div>
-        <h1 className={classes.header}>Submit Solution</h1>
+        {0 == 1 && <h1 className={classes.header}>Submit Solution</h1>}
 
         <div className={classes.controls}></div>
       </div>
