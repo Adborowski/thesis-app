@@ -81,8 +81,8 @@ const TaskEditor = (props) => {
   };
 
   const handleMediaChange = (e) => {
-    console.log(e.target.files[0]);
-    setTaskMedia(e.target.files[0]);
+    console.log(e.target.files);
+    setTaskMedia(e.target.files);
   };
 
   const handleTaskSubmit = (e) => {
@@ -111,26 +111,31 @@ const TaskEditor = (props) => {
     //     console.log(error);
     //   });
 
-    const newTaskFormData = new FormData();
-    newTaskFormData.append("uploadedFile", taskMedia);
+    const formData = new FormData();
+
     const config = {
       headers: {
         "content-type": "multipart/form-data",
       },
     };
 
-    for (var p of newTaskFormData) {
-      console.log(p);
+    for (var mediaItem of taskMedia) {
+      console.log(mediaItem);
+      formData.append("uploadedFile", mediaItem);
     }
 
     axios
-      .post("http://localhost:81/upload-media", newTaskFormData, config)
+      .post("http://localhost:81/upload-media", formData, config)
       .then((res) => {
         console.log(res);
       })
       .catch((error) => {
         console.log(error);
       });
+
+    for (var p of formData) {
+      console.log(p);
+    }
 
     // fetch("https://tiszuk.com/upload-media", {
     //   method: "POST",
@@ -189,6 +194,7 @@ const TaskEditor = (props) => {
 
           <input
             type="file"
+            multiple
             accept=".png, .jpg, .jpeg"
             name="uploadedFile"
             onChange={handleMediaChange}
