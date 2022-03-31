@@ -1,4 +1,17 @@
+html {
+  height: 100vh;
+  background: linear-gradient(
+    0deg,
+    rgba(152, 92, 212, 1) 0%,
+    rgba(150, 112, 187, 1) 70%
+  );
+}
+
 body {
+  /* background-color: #985cd4; */
+  /* background-color: #9670bb; */
+  /* background: rgb(152, 92, 212); */
+  background-color: transparent;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -12,7 +25,7 @@ body {
 
 :root {
   --color-1: #6d1cbd;
-  --color-2: #fff200;
+  --color-2: #e9c31c;
   --color-3: #a52a2a;
 }
 
@@ -58,6 +71,28 @@ body {
 :global(.label) {
   font-size: 12px;
   color: grey;
+}
+
+:global(.taskTitle) {
+  /* color: red; */
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+:global(.taskDescription) {
+  /* color: red; */
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
+:global(.taskReward) {
+  max-width: 60px;
+  font-size: 1.5rem;
+  padding: 6px 12px;
+  background-color: var(--color-2);
+  display: inline-block;
+  margin-top: 3px;
+  border-radius: 6px;
 }
 
 @keyframes fadeIn {

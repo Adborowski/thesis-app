@@ -132,10 +132,6 @@ const TaskEditor = (props) => {
       .catch((error) => {
         console.log(error);
       });
-
-    for (var p of formData) {
-      console.log(p);
-    }
   };
 
   if (props.latlng) {

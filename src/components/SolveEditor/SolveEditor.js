@@ -37,16 +37,18 @@ const SolveEditor = (props) => {
 
         <div className={classes.taskInfo}>
           <div className={classes.infoItem}>
-            <div className={"label"}>Title</div>
-            <div className={classes.content}>{task.title}</div>
+            {0 == 1 && <div className={"label"}>Title</div>}
+            <div className={`${classes.content} taskTitle`}>{task.title}</div>
           </div>
           <div className={classes.infoItem}>
-            <div className={"label"}>Description</div>
-            <div className={classes.content}>{task.description}</div>
+            {0 == 1 && <div className={"label"}>Description</div>}
+            <div className={`${classes.content} taskDescription`}>
+              {task.description}
+            </div>
           </div>
           <div className={classes.infoItem}>
             <div className={"label"}>Reward</div>
-            <div className={classes.content}>{task.reward}</div>
+            <div className={`${classes.content} taskReward`}>{task.reward}</div>
           </div>
         </div>
 
@@ -66,7 +68,7 @@ const SolveEditor = (props) => {
       </div>
     );
   } else {
-    return <p>loading...</p>;
+    return <Nav />;
   }
 };
 

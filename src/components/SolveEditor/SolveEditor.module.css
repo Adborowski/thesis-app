@@ -6,7 +6,7 @@
   padding: 12px;
   border-radius: 6px;
   min-width: 250px;
-  margin-top: 12px;
+  margin: 12px 12px 0px 12px;
   position: relative;
 }
 
@@ -60,7 +60,6 @@
 }
 
 .content {
-  font-size: 1.25rem;
 }
 
 .controls {
