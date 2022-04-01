@@ -63,7 +63,7 @@ function App() {
 
   const closeTaskModal = () => {
     console.log("CLOSING TASK MODAL");
-    setNewTaskLocation();
+    setNewTaskLocation(); // no location means modal is closed
     handleEditorClose();
   };
 

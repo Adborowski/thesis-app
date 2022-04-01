@@ -102,12 +102,10 @@ button {
 }
 
 :global(.taskReward) {
-  /* max-width: 60px; */
   font-size: 1.5rem;
   padding: 6px 0px;
   background-color: var(--color-2);
   display: inline-block;
-  /* margin-top: 3px; */
   border-radius: 6px;
   margin: auto;
   width: 100%;

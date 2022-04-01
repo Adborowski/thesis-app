@@ -23,9 +23,26 @@ const MapWrapper = (props) => {
   // MapInsert contains scripts which need to run with access to the map reference via useMap hook
   // such scripts must be run from a child of MapContainer
   const MapInsert = () => {
-    // ^ must be returned as a child of MapContainer
+    // ^ must be a child of MapContainer
     const map = useMap();
-    map.invalidateSize();
+
+    const mapDefaultCenter = [51.477928, -0.001545];
+    const [mapCenter, setMapCenter] = useState(mapDefaultCenter);
+
+    useEffect(() => {
+      console.log("map changed");
+
+      // on every redraw, fake a click on the map
+      // to ensure it is in focus and there is no need
+      // to click twice (specific bug!)
+      var evt = new MouseEvent("click", {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        clientX: 20,
+      });
+      map._container.dispatchEvent(evt);
+    }, [map]);
 
     const createEditorPopup = (latlng) => {
       const newMarker = L.marker(latlng, { icon: EditorIcon() });
@@ -65,33 +82,39 @@ const MapWrapper = (props) => {
 
     // center view on popup when it opens
     map.on("popupopen", function (e) {
-      console.log("Firing popupopen", e);
-      console.log(e.target._popup._latlng);
+      console.log("popupopen");
       var px = map.project(e.target._popup._latlng); // find the pixel location on the map where the popup anchor is
       px.y -= e.target._popup._container.clientHeight; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
       map.panTo(map.unproject(px), { animate: true }); // pan to new center
-      console.log("Layers:", map._layers);
     });
 
     map.on("popupclose", function (e) {
-      console.log("Popup closed:", e.popup._source);
+      console.log("popupclose");
       if (e.popup._source.type === "editorMarker") {
         e.popup._source.remove();
       }
-      console.log("Layers:", map._layers);
     });
 
     useMapEvents({
+      load: (e) => {
+        console.log("LOADED");
+      },
+
+      blur: (e) => {
+        console.log("BLURRED", e);
+      },
+
+      focus: (e) => {
+        console.log("FOCUSED", e);
+      },
+
       click: (e) => {
-        console.log(e.latlng);
-        console.log("Layers:", map._layers);
+        console.log(e);
         createEditorPopup(e.latlng);
       },
 
       locationfound: (location) => {
         console.log("location found:", location);
-        // setUserLocation(location);
-        // console.log("User found at location:", userLocation);
       },
 
       locationerror: (error) => {
@@ -109,6 +132,8 @@ const MapWrapper = (props) => {
         center={[51.477928, -0.001545]}
         zoom={13}
         tap={false}
+        tabindex={"5"}
+        id={"map"}
       >
         <MapInsert />
         <Markers

@@ -3,6 +3,7 @@
   cursor: crosshair;
   opacity: 1;
   animation: fadeIn 2s;
+  outline: none;
 }
 
 @keyframes fadeIn {

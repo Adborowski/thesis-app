@@ -6,10 +6,8 @@ const Minimap = (props) => {
   const [taskLatlng, setTaskLatlng] = useState();
 
   const icon = props.icon();
-  console.log(icon);
 
   useEffect(() => {
-    console.log("Minimap Props", props);
     if (props.taskLatlng) {
       setTaskLatlng(props.taskLatlng);
     }

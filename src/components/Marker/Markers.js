@@ -22,7 +22,6 @@ const Markers = (props) => {
     if (e.target._popup._source.type === "taskMarker") {
       const btnClose = document.getElementById("btnClose");
       const btnSolve = document.getElementById("btnSolve");
-      const btnDelete = document.getElementById("btnDelete");
 
       btnClose.addEventListener("click", () => {
         map.closePopup();
@@ -30,18 +29,13 @@ const Markers = (props) => {
 
       btnSolve.addEventListener("click", (e) => {
         const taskId = parseInt(e.target.dataset.markerid);
+        map.closePopup();
         props.openTaskSolver(taskId);
-      });
-
-      btnDelete.addEventListener("click", (e) => {
-        const markerIdToDelete = parseInt(e.target.dataset.markerid);
-        console.log(markerIdToDelete);
       });
     }
   };
 
   map.on("popupopen", function (e) {
-    console.log(e.target._popup._source);
     setPopupEvents(e);
   });
 

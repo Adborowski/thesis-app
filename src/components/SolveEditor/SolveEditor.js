@@ -9,12 +9,10 @@ import Minimap from "../Minimap/Minimap";
 
 const SolveEditor = (props) => {
   const [task, setTask] = useState(props.task);
-  console.log(props);
 
   useEffect(() => {
     if (props.task) {
       setTask(props.task);
-      console.log(props);
     }
   }, [props]);
 
