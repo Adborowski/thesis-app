@@ -7,6 +7,7 @@ import EditorIcon from "../Icons/EditorIcon";
 import axios from "axios";
 import Minimap from "../Minimap/Minimap";
 import Nav from "../Nav/Nav";
+import uuid from "react-uuid";
 
 const TaskEditor = (props) => {
   const [taskTitle, setTaskTitle] = useState();
@@ -22,6 +23,10 @@ const TaskEditor = (props) => {
   useEffect(() => {
     setFakeTask({ latlng: taskLatlng });
   }, [taskLatlng]);
+
+  useEffect(() => {
+    console.log(taskMedia);
+  }, [taskMedia]);
 
   // figure out which Id is next in the database
 
@@ -81,57 +86,77 @@ const TaskEditor = (props) => {
   };
 
   const handleMediaChange = (e) => {
-    console.log(e.target.files);
-    setTaskMedia(e.target.files);
-  };
+    const mediaIds = [];
 
-  const handleTaskSubmit = (e) => {
-    e.preventDefault();
-    const newTaskData = {
-      id: taskId,
-      ownerId: 1,
-      media: ["jerry.jpeg"],
-      title: taskTitle,
-      description: taskDescription,
-      reward: taskReward,
-      latlng: [props.latlng.lat, props.latlng.lng],
-    };
-    console.log("Creating new task...", newTaskData);
-
-    // axios
-    //   .post("https://tiszuk.com/create-task", newTaskData)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     if (res.data) {
-    //       props.closeTaskModal();
-    //       props.fetchTaskData();
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
-    const formData = new FormData();
-
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
-
-    for (var mediaItem of taskMedia) {
-      console.log(mediaItem);
-      formData.append("uploadedFile", mediaItem);
+    // loop through files (FileList)
+    for (let i = 0; i < e.target.files.length; i++) {
+      const newMediaId = uuid();
+      e.target.files[i].uid = newMediaId;
+      mediaIds.push(newMediaId);
     }
 
+    setTaskMedia(e.target.files);
+    console.log(taskMedia);
+  };
+
+  const createTask = (taskData) => {
+    const config = {
+      "content-type": "application/json",
+    };
     axios
-      .post("http://localhost:81/upload-media", formData, config)
+      .post("http://localhost:81/create-task", taskData, config)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        if (res.data) {
+          // props.closeTaskModal();
+          props.fetchTaskData();
+        }
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleTaskSubmit = (e) => {
+    e.preventDefault();
+
+    const newTaskData = {
+      id: taskId,
+      ownerId: 1,
+      media: [],
+      title: "dummyTitle",
+      description: "dummyDesc",
+      reward: 420,
+      latlng: [props.latlng.lat, props.latlng.lng],
+    };
+
+    const config = {
+      headers: {
+        "Content-type": "multipart/form-data",
+      },
+    };
+
+    // loop through files and upload each one to DB(FileList)
+    const mediaRefs = [];
+    for (let i = 0; i < taskMedia.length; i++) {
+      const imageData = new FormData();
+      imageData.append("task_media", taskMedia[i]);
+
+      axios
+        .post("http://localhost:81/upload-media", imageData, config)
+        .then((res) => {
+          console.log(res);
+          mediaRefs.push(res._id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } // end of for loop
+
+    newTaskData.media = mediaRefs;
+    createTask(newTaskData);
+
+    // console.log("Creating new task...", newTaskData);
   };
 
   if (props.latlng) {
@@ -156,44 +181,52 @@ const TaskEditor = (props) => {
           encType="multipart/form-data"
           onSubmit={handleTaskSubmit}
           id="form"
+          action="/upload-media"
+          method="POST"
         >
-          <input
-            onChange={handleTitleChange}
-            id="taskTitle"
-            placeholder={"task title"}
-          ></input>
-
-          <input
-            onChange={handleRewardChange}
-            id="taskReward"
-            type="number"
-            placeholder={"reward"}
-          ></input>
-
-          <input
-            onChange={handleDescriptionChange}
-            id="taskDescription"
-            placeholder={"task description"}
-          ></input>
+          {
+            // <div>
+            //   <input
+            //     onChange={handleTitleChange}
+            //     id="taskTitle"
+            //     placeholder={"task title"}
+            //     defaultValue={"Test Task"}
+            //   ></input>
+            //   <input
+            //     onChange={handleRewardChange}
+            //     id="taskReward"
+            //     type="number"
+            //     placeholder={"reward"}
+            //     defaultValue={102}
+            //   ></input>
+            //   <input
+            //     onChange={handleDescriptionChange}
+            //     id="taskDescription"
+            //     placeholder={"task description"}
+            //     defaultValue={
+            //       "Test Description Test Description Test Description Test Description "
+            //     }
+            //   ></input>
+            // </div>
+          }
 
           <input
             type="file"
             multiple
+            required
             accept=".png, .jpg, .jpeg"
-            name="uploadedFile"
+            name="task_files"
             onChange={handleMediaChange}
           />
 
-          <div className={classes.buttons}>
-            <button type="submit" id="btnCreateTask" className={"button"}>
-              Create
-            </button>
-            <div
-              onClick={props.closeTaskModal}
-              className={`${classes.btnCancel} button`}
-            >
-              Cancel
-            </div>
+          <button type="submit" id="btnCreateTask" className={"button"}>
+            Create
+          </button>
+          <div
+            // onClick={props.closeTaskModal}
+            className={`${classes.btnCancel} button`}
+          >
+            Cancel
           </div>
         </form>
       </div>

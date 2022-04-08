@@ -30,11 +30,9 @@ const MapWrapper = (props) => {
     const [mapCenter, setMapCenter] = useState(mapDefaultCenter);
 
     useEffect(() => {
-      console.log("map changed");
-
-      // on every redraw, fake a click on the map
+      // bugfix: on every redraw, fake a click on the map
       // to ensure it is in focus and there is no need
-      // to click twice (specific bug!)
+      // to click twice
       var evt = new MouseEvent("click", {
         view: window,
         bubbles: true,
@@ -101,11 +99,11 @@ const MapWrapper = (props) => {
       },
 
       blur: (e) => {
-        console.log("BLURRED", e);
+        // console.log("BLURRED", e);
       },
 
       focus: (e) => {
-        console.log("FOCUSED", e);
+        // console.log("FOCUSED", e);
       },
 
       click: (e) => {
