@@ -54,11 +54,13 @@ const Markers = (props) => {
         const popupContent = (
           <div className={classes.taskMarker}>
             <div className={classes.mediaGallery}>
-              <img
-                className={classes.mediaItem}
-                src={"/img/" + task.media[0]}
-                alt={"Content of the task"}
-              ></img>
+              <div
+                key={"lol"}
+                style={{
+                  backgroundImage: `url("data:image/jpeg;base64,${task.media[0]}")`,
+                }}
+                className={"taskMediaItem"}
+              ></div>
             </div>
 
             <div className={classes.infoItems}>

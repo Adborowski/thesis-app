@@ -47,13 +47,6 @@
   /* border: 1px solid lime; */
 }
 
-.mediaItem {
-  min-height: 150px;
-  /* border: 1px solid red; */
-  background-size: cover;
-  background-position: center;
-}
-
 .mediaItem img {
   max-width: 100%;
 }

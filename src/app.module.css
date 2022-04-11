@@ -111,6 +111,13 @@ button {
   width: 100%;
 }
 
+:global(.taskMediaItem) {
+  min-width: 100px;
+  min-height: 100px;
+  /* border: 1px solid black; */
+  background-size: cover !important;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

@@ -57,8 +57,10 @@ const SolveEditor = (props) => {
           {task.media.map((item) => (
             <div
               key={item}
-              style={{ backgroundImage: `url(img/${item})` }}
-              className={classes.mediaItem}
+              style={{
+                backgroundImage: `url("data:image/jpeg;base64,${item}")`,
+              }}
+              className={"taskMediaItem"}
             ></div>
           ))}
         </div>

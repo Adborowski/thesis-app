@@ -18,8 +18,11 @@ const TaskEditor = (props) => {
   const [taskMedia, setTaskMedia] = useState(); // frontend
   // Minimap takes a whole task so let's make a dummy
   const [fakeTask, setFakeTask] = useState({ latlng: [0, 0] });
-  const [mediaRefs, setMediaRefs] = useState([]);
   const [mediaStrings, setMediaStrings] = useState([]);
+
+  useEffect(() => {
+    getNewTaskId();
+  }, []);
 
   useEffect(() => {
     setFakeTask({ latlng: taskLatlng });
@@ -54,15 +57,10 @@ const TaskEditor = (props) => {
   }, [taskMedia]);
 
   useEffect(() => {
-    console.log("mediaRefs", mediaRefs);
-  }, [mediaRefs]);
-
-  useEffect(() => {
     console.log("mediaStrings", mediaStrings);
   }, [mediaStrings]);
 
   // figure out which Id is next in the database
-
   const getNewTaskId = () => {
     axios
       .get("http://localhost:81/tasks")
@@ -78,10 +76,6 @@ const TaskEditor = (props) => {
       });
   };
 
-  useEffect(() => {
-    getNewTaskId();
-  }, []);
-
   const MapScript = () => {
     const map = useMap();
 
@@ -89,8 +83,6 @@ const TaskEditor = (props) => {
       console.log("new taskLatLng", taskLatlng);
       map.panTo(taskLatlng);
     }, [taskLatlng]);
-
-    return null;
   };
 
   // dummy latlng is [0,0]
@@ -104,7 +96,7 @@ const TaskEditor = (props) => {
   }, []);
 
   const handleTitleChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setTaskTitle(e.target.value);
   };
 
@@ -158,6 +150,23 @@ const TaskEditor = (props) => {
       });
   };
 
+  const TaskMedia = (props) => {
+    let mediaItems = [];
+    if (props.mediaStrings.length > 0) {
+      mediaItems = props.mediaStrings.map((string) => (
+        <div
+          className={"taskMediaItem"}
+          src={`data:image/jpeg;base64,${string}`}
+          style={{
+            background: `url("data:image/jpeg;base64,${string}")`,
+          }}
+        ></div>
+      ));
+    }
+
+    return mediaItems;
+  };
+
   if (props.latlng) {
     return (
       <div className={classes.TaskEditor}>
@@ -174,6 +183,9 @@ const TaskEditor = (props) => {
         </div>
 
         <Minimap taskLatlng={taskLatlng} icon={EditorIcon} />
+        <div className={classes.taskMedia}>
+          <TaskMedia mediaStrings={mediaStrings} />
+        </div>
 
         <form
           className={classes.form}
@@ -181,31 +193,27 @@ const TaskEditor = (props) => {
           id="form"
           method="POST"
         >
-          {
-            // <div>
-            //   <input
-            //     onChange={handleTitleChange}
-            //     id="taskTitle"
-            //     placeholder={"task title"}
-            //     defaultValue={"Test Task"}
-            //   ></input>
-            //   <input
-            //     onChange={handleRewardChange}
-            //     id="taskReward"
-            //     type="number"
-            //     placeholder={"reward"}
-            //     defaultValue={102}
-            //   ></input>
-            //   <input
-            //     onChange={handleDescriptionChange}
-            //     id="taskDescription"
-            //     placeholder={"task description"}
-            //     defaultValue={
-            //       "Test Description Test Description Test Description Test Description "
-            //     }
-            //   ></input>
-            // </div>
-          }
+          <input
+            onChange={handleTitleChange}
+            id="taskTitle"
+            placeholder={"task title"}
+            defaultValue={"Test Task"}
+          ></input>
+          <input
+            onChange={handleRewardChange}
+            id="taskReward"
+            type="number"
+            placeholder={"reward"}
+            defaultValue={102}
+          ></input>
+          <input
+            onChange={handleDescriptionChange}
+            id="taskDescription"
+            placeholder={"task description"}
+            defaultValue={
+              "Test Description Test Description Test Description Test Description "
+            }
+          ></input>
 
           <input
             type="file"
