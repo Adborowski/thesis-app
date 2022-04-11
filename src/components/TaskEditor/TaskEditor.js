@@ -15,18 +15,51 @@ const TaskEditor = (props) => {
   const [taskReward, setTaskReward] = useState();
   const [taskLatlng, setTaskLatlng] = useState([0, 0]);
   const [taskId, setTaskId] = useState();
-  const [taskMedia, setTaskMedia] = useState();
-
+  const [taskMedia, setTaskMedia] = useState(); // frontend
   // Minimap takes a whole task so let's make a dummy
   const [fakeTask, setFakeTask] = useState({ latlng: [0, 0] });
+  const [mediaRefs, setMediaRefs] = useState([]);
+  const [mediaStrings, setMediaStrings] = useState([]);
 
   useEffect(() => {
     setFakeTask({ latlng: taskLatlng });
   }, [taskLatlng]);
 
   useEffect(() => {
-    console.log(taskMedia);
+    console.log("taskMedia:", taskMedia);
+
+    if (taskMedia) {
+      for (let i = 0; i < taskMedia.length; i++) {
+        const imageData = new FormData();
+        imageData.append("task_media", taskMedia[i]);
+
+        axios
+          .post("http://localhost:81/upload-media", imageData, {
+            headers: {
+              "Content-type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            setMediaStrings((mediaStrings) => [
+              ...mediaStrings,
+              res.data.imgString,
+            ]);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } // end of for loop
+    } // end of if
   }, [taskMedia]);
+
+  useEffect(() => {
+    console.log("mediaRefs", mediaRefs);
+  }, [mediaRefs]);
+
+  useEffect(() => {
+    console.log("mediaStrings", mediaStrings);
+  }, [mediaStrings]);
 
   // figure out which Id is next in the database
 
@@ -86,35 +119,7 @@ const TaskEditor = (props) => {
   };
 
   const handleMediaChange = (e) => {
-    const mediaIds = [];
-
-    // loop through files (FileList)
-    for (let i = 0; i < e.target.files.length; i++) {
-      const newMediaId = uuid();
-      e.target.files[i].uid = newMediaId;
-      mediaIds.push(newMediaId);
-    }
-
     setTaskMedia(e.target.files);
-    console.log(taskMedia);
-  };
-
-  const createTask = (taskData) => {
-    const config = {
-      "content-type": "application/json",
-    };
-    axios
-      .post("http://localhost:81/create-task", taskData, config)
-      .then((res) => {
-        console.log(res.data);
-        if (res.data) {
-          // props.closeTaskModal();
-          props.fetchTaskData();
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   const handleTaskSubmit = (e) => {
@@ -123,40 +128,34 @@ const TaskEditor = (props) => {
     const newTaskData = {
       id: taskId,
       ownerId: 1,
-      media: [],
+      media: mediaStrings,
       title: "dummyTitle",
       description: "dummyDesc",
       reward: 420,
       latlng: [props.latlng.lat, props.latlng.lng],
     };
 
-    const config = {
+    console.log("Creating new task...", newTaskData);
+
+    const configJ = {
       headers: {
-        "Content-type": "multipart/form-data",
+        "Content-Type": "application/json",
       },
     };
 
-    // loop through files and upload each one to DB(FileList)
-    const mediaRefs = [];
-    for (let i = 0; i < taskMedia.length; i++) {
-      const imageData = new FormData();
-      imageData.append("task_media", taskMedia[i]);
-
-      axios
-        .post("http://localhost:81/upload-media", imageData, config)
-        .then((res) => {
-          console.log(res);
-          mediaRefs.push(res._id);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } // end of for loop
-
-    newTaskData.media = mediaRefs;
-    createTask(newTaskData);
-
-    // console.log("Creating new task...", newTaskData);
+    axios
+      .post("http://localhost:81/create-task", newTaskData)
+      .then((res) => {
+        console.log(res.data);
+        console.log(res);
+        if (res.data) {
+          // props.closeTaskModal();
+          props.fetchTaskData();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   if (props.latlng) {
@@ -178,10 +177,8 @@ const TaskEditor = (props) => {
 
         <form
           className={classes.form}
-          encType="multipart/form-data"
           onSubmit={handleTaskSubmit}
           id="form"
-          action="/upload-media"
           method="POST"
         >
           {
