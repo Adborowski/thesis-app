@@ -6,6 +6,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Icon from "../Icons/Icon";
 import Minimap from "../Minimap/Minimap";
+import Masonry from "react-responsive-masonry";
 
 const SolveEditor = (props) => {
   const [task, setTask] = useState(props.task);
@@ -54,15 +55,11 @@ const SolveEditor = (props) => {
         </div>
 
         <div className={classes.taskMedia}>
-          {task.media.map((item) => (
-            <div
-              key={item}
-              style={{
-                backgroundImage: `url("data:image/jpeg;base64,${item}")`,
-              }}
-              className={"taskMediaItem"}
-            ></div>
-          ))}
+          <Masonry columnsCount={2} gutter={"12px"}>
+            {task.media.map((item) => (
+              <img src={`data:image/jpeg;base64,${item}`} />
+            ))}
+          </Masonry>
         </div>
         {0 == 1 && <h1 className={classes.header}>Submit Solution</h1>}
 

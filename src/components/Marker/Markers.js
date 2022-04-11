@@ -48,6 +48,7 @@ const Markers = (props) => {
     });
 
     if (Object.keys(map._layers).length < 2) {
+      // 2 dummies
       taskData.forEach((task) => {
         const newMarker = L.marker(task.latlng, { icon: Icon() });
         newMarker.type = "taskMarker";

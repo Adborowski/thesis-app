@@ -112,9 +112,10 @@ button {
 }
 
 :global(.taskMediaItem) {
-  min-width: 100px;
-  min-height: 100px;
-  /* border: 1px solid black; */
+  /* min-width: 100px; */
+
+  min-height: 150px;
+  border: 1px solid black;
   background-size: cover !important;
 }
 

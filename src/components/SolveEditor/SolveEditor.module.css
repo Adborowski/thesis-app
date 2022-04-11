@@ -42,9 +42,6 @@
 
 .taskMedia {
   margin: 18px 0px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  /* border: 1px solid lime; */
 }
 
 .mediaItem img {

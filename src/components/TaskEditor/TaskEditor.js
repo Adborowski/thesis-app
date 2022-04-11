@@ -153,8 +153,10 @@ const TaskEditor = (props) => {
   const TaskMedia = (props) => {
     let mediaItems = [];
     if (props.mediaStrings.length > 0) {
+      console.log(props.mediaStrings);
       mediaItems = props.mediaStrings.map((string) => (
         <div
+          key={Math.random()}
           className={"taskMediaItem"}
           src={`data:image/jpeg;base64,${string}`}
           style={{
@@ -193,27 +195,31 @@ const TaskEditor = (props) => {
           id="form"
           method="POST"
         >
-          <input
-            onChange={handleTitleChange}
-            id="taskTitle"
-            placeholder={"task title"}
-            defaultValue={"Test Task"}
-          ></input>
-          <input
-            onChange={handleRewardChange}
-            id="taskReward"
-            type="number"
-            placeholder={"reward"}
-            defaultValue={102}
-          ></input>
-          <input
-            onChange={handleDescriptionChange}
-            id="taskDescription"
-            placeholder={"task description"}
-            defaultValue={
-              "Test Description Test Description Test Description Test Description "
-            }
-          ></input>
+          {
+            // <div>
+            //   <input
+            //     onChange={handleTitleChange}
+            //     id="taskTitle"
+            //     placeholder={"task title"}
+            //     defaultValue={"Test Task"}
+            //   ></input>
+            //   <input
+            //     onChange={handleRewardChange}
+            //     id="taskReward"
+            //     type="number"
+            //     placeholder={"reward"}
+            //     defaultValue={102}
+            //   ></input>
+            //   <input
+            //     onChange={handleDescriptionChange}
+            //     id="taskDescription"
+            //     placeholder={"task description"}
+            //     defaultValue={
+            //       "Test Description Test Description Test Description Test Description "
+            //     }
+            //   ></input>
+            // </div>
+          }
 
           <input
             type="file"
